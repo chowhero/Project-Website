@@ -1,67 +1,238 @@
-<!-- 军事风倒计时 -->
-<div id="countdown" style="
-  font-family: 'Courier New', monospace;
-  text-align: center;
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 500px;
-  background: black;
-  color: lime; /* 军用绿色数字 */
-  border: 3px solid #333;
-  border-radius: 5px;
-  text-shadow: 0 0 5px rgba(0,255,0,0.7);
-">
-  <h2 style="color: white; margin-top: 0;">Game Publish Time</h2>
-  <div id="timer" style="font-size: 1.8em; letter-spacing: 2px;">
-    <span id="years">0</span>年
-    <span id="months">0</span>月 
-    <span id="days">0</span>天
-  </div>
-  <div style="font-size: 0.8em; color: #ccc; margin-top: 10px;">
-    T-MINUS TO LAUNCH
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States Army | The Game</title>
+    <style>
+        /* 军事风格黑白主题 */
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #222222;
+            --highlight: #00FF00;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 3px solid var(--gray);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--gray);
+            padding: 10px;
+        }
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: 1px solid transparent;
+        }
+        nav a:hover {
+            border-color: var(--white);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* 军事风按钮 */
+        .btn {
+            display: inline-block;
+            background-color: var(--black);
+            color: var(--white);
+            padding: 12px 24px;
+            margin: 10px 0;
+            border: 2px solid var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--white);
+            color: var(--black);
+        }
+        /* 倒计时样式 */
+        #countdown {
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 40px auto;
+            padding: 20px;
+            max-width: 500px;
+            background-color: var(--black);
+            color: var(--highlight);
+            border: 3px solid var(--gray);
+            text-shadow: 0 0 5px rgba(0,255,0,0.7);
+        }
+        /* Discord小工具 */
+        .discord-widget {
+            margin: 40px auto;
+            text-align: center;
+        }
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 3px solid var(--gray);
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>UNITED STATES ARMY</h1>
+        <p>The Official Game Website</p>
+    </header>
 
-<script>
-// 设置目标日期（1年2个月28天后的日期）
-const targetDate = new Date();
-targetDate.setFullYear(targetDate.getFullYear() + 1);
-targetDate.setMonth(targetDate.getMonth() + 2);
-targetDate.setDate(targetDate.getDate() + 28);
+    <nav>
+        <a href="#" onclick="showPage('home')">主页</a>
+        <a href="#" onclick="showPage('ownership')">团队</a>
+        <a href="#" onclick="showPage('thanks')">特别鸣谢</a>
+        <a href="#" onclick="showPage('gamepass')">Game Pass</a>
+        <a href="#" onclick="showPage('application')">申请</a>
+    </nav>
 
-function updateCountdown() {
-  const now = new Date();
-  let diff = targetDate - now;
+    <div class="container">
+        <!-- 主页 -->
+        <div id="home" class="page active">
+            <h2>欢迎来到美军模拟游戏</h2>
+            <p>体验最真实的现代军事战斗模拟，加入我们的虚拟战场！</p>
+            
+            <!-- 倒计时 -->
+            <div id="countdown">
+                <h3>行动倒计时</h3>
+                <div id="timer" style="font-size: 1.8em;">
+                    <span id="years">0</span>年
+                    <span id="months">0</span>月 
+                    <span id="days">0</span>天
+                </div>
+                <div style="font-size: 0.8em; color: #ccc;">
+                    T-MINUS TO LAUNCH
+                </div>
+            </div>
+            
+            <!-- Discord小工具 -->
+            <div class="discord-widget">
+                <iframe src="https://discord.com/widget?id=YOUR_SERVER_ID&theme=dark" 
+                        width="350" 
+                        height="500" 
+                        allowtransparency="true" 
+                        frameborder="0"
+                        style="border: 2px solid var(--black);"></iframe>
+                <p>加入我们的Discord社区！</p>
+            </div>
+        </div>
 
-  if (diff <= 0) {
-    document.getElementById('timer').innerHTML = "行动已开始！";
-    return;
-  }
+        <!-- 团队页面 -->
+        <div id="ownership" class="page">
+            <h2>开发团队</h2>
+            <p>认识我们的核心开发成员...</p>
+            <!-- 在这里添加团队成员信息 -->
+        </div>
 
-  // 计算年/月/日
-  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-  diff -= years * (1000 * 60 * 60 * 24 * 365);
-  
-  const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-  diff -= months * (1000 * 60 * 60 * 24 * 30);
-  
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        <!-- 特别鸣谢 -->
+        <div id="thanks" class="page">
+            <h2>特别鸣谢</h2>
+            <p>感谢以下合作伙伴的支持...</p>
+            <!-- 在这里添加合作伙伴logo -->
+        </div>
 
-  // 更新显示
-  document.getElementById('years').innerText = years;
-  document.getElementById('months').innerText = months;
-  document.getElementById('days').innerText = days;
-}
+        <!-- Game Pass -->
+        <div id="gamepass" class="page">
+            <h2>Game Pass</h2>
+            <p>获取游戏高级通行证，解锁独家内容：</p>
+            <a href="YOUR_STORE_LINK" class="btn">立即购买</a>
+            <!-- 游戏通行证内容介绍 -->
+        </div>
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
-</script>
-<div style="text-align: center; margin: 20px;">
-  <iframe src="https://discord.com/widget?id=1339167213680070680&theme=dark" 
-          width="350" 
-          height="500" 
-          allowtransparency="true" 
-          frameborder="0"
-          style="border: 2px solid black;"></iframe>
-  <p>Join our community server now!</p>
-</div>
+        <!-- 申请表单 -->
+        <div id="application" class="page">
+            <h2>加入我们</h2>
+            <p>填写申请表加入开发团队或测试计划：</p>
+            <iframe src="YOUR_GOOGLE_FORM_LINK" 
+                    width="100%" 
+                    height="800" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">加载中...</iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 United States Army Game. All rights reserved.</p>
+        <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
+    </footer>
+
+    <script>
+        // 页面切换功能
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // 倒计时功能 (1年2个月28天)
+        const targetDate = new Date();
+        targetDate.setFullYear(targetDate.getFullYear() + 1);
+        targetDate.setMonth(targetDate.getMonth() + 2);
+        targetDate.setDate(targetDate.getDate() + 28);
+
+        function updateCountdown() {
+            const now = new Date();
+            let diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('timer').innerHTML = "行动已开始！";
+                return;
+            }
+
+            // 计算年/月/日
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            diff -= years * (1000 * 60 * 60 * 24 * 365);
+            
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+            diff -= months * (1000 * 60 * 60 * 24 * 30);
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            // 更新显示
+            document.getElementById('years').innerText = years;
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = days;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
