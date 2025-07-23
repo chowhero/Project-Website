@@ -1,46 +1,58 @@
-<!-- 倒计时容器 -->
-<!DOCTYPE html>
+<!-- 军事风倒计时 -->
 <div id="countdown" style="
-  font-family: Arial, sans-serif;
+  font-family: 'Courier New', monospace;
   text-align: center;
-  margin: 20px;
-  padding: 15px;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 500px;
   background: black;
-  color: white;
-  border: 2px solid white;
+  color: lime; /* 军用绿色数字 */
+  border: 3px solid #333;
+  border-radius: 5px;
+  text-shadow: 0 0 5px rgba(0,255,0,0.7);
 ">
-  <h2>Game will be publish</h2>
-  <div id="timer" style="font-size: 1.5em;">
-    <span id="days"></span>天 
-    <span id="hours"></span>小时 
-    <span id="minutes"></span>分 
-    <span id="seconds"></span>秒
+  <h2 style="color: white; margin-top: 0;">行动倒计时</h2>
+  <div id="timer" style="font-size: 1.8em; letter-spacing: 2px;">
+    <span id="years">0</span>年
+    <span id="months">0</span>月 
+    <span id="days">0</span>天
+  </div>
+  <div style="font-size: 0.8em; color: #ccc; margin-top: 10px;">
+    T-MINUS TO LAUNCH
   </div>
 </div>
 
 <script>
-// 设置目标日期（格式：YYYY/MM/DD）
-const targetDate = new Date('2024/12/31').getTime();
+// 设置目标日期（1年2个月28天后的日期）
+const targetDate = new Date();
+targetDate.setFullYear(targetDate.getFullYear() + 1);
+targetDate.setMonth(targetDate.getMonth() + 2);
+targetDate.setDate(targetDate.getDate() + 28);
 
 function updateCountdown() {
-  const now = new Date().getTime();
-  const diff = targetDate - now;
+  const now = new Date();
+  let diff = targetDate - now;
 
-  // 计算天数/小时/分钟/秒
-  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-    diff -= years * (1000 * 60 * 60 * 24 * 365);
-
-    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-    diff -= months * (1000 * 60 * 60 * 24 * 30);
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    // 更新显示
-    document.getElementById('years').innerText = years;
-    document.getElementById('months').innerText = months;
-    document.getElementById('days').innerText = days;
+  if (diff <= 0) {
+    document.getElementById('timer').innerHTML = "行动已开始！";
+    return;
   }
 
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
+  // 计算年/月/日
+  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+  diff -= years * (1000 * 60 * 60 * 24 * 365);
+  
+  const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+  diff -= months * (1000 * 60 * 60 * 24 * 30);
+  
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  // 更新显示
+  document.getElementById('years').innerText = years;
+  document.getElementById('months').innerText = months;
+  document.getElementById('days').innerText = days;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
