@@ -147,12 +147,6 @@ nav a:hover {
     font-weight: bold;
 }
 
-.blink {
-    animation: blink 1s linear infinite;
-}
-@keyframes blink {
-    50% { opacity: 0; }
-}  
 
 .countdown-subtext {
     font-size: 0.8em;
@@ -184,6 +178,7 @@ nav a:hover {
 }
 
 /* 响应式设计 */
+
 @media (max-width: 768px) {
     header {
         flex-direction: column;
