@@ -1,1 +1,45 @@
+<!-- 倒计时容器 -->
+<div id="countdown" style="
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+  padding: 15px;
+  background: black;
+  color: white;
+  border: 2px solid white;
+">
+  <h2>Game will be publish</h2>
+  <div id="timer" style="font-size: 1.5em;">
+    <span id="days"></span>天 
+    <span id="hours"></span>小时 
+    <span id="minutes"></span>分 
+    <span id="seconds"></span>秒
+  </div>
+</div>
 
+<script>
+// 设置目标日期（格式：YYYY/MM/DD）
+const targetDate = new Date('2024/12/31').getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+
+  // 计算天数/小时/分钟/秒
+  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    diff -= years * (1000 * 60 * 60 * 24 * 365);
+
+    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+    diff -= months * (1000 * 60 * 60 * 24 * 30);
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    // 更新显示
+    document.getElementById('years').innerText = years;
+    document.getElementById('months').innerText = months;
+    document.getElementById('days').innerText = days;
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
