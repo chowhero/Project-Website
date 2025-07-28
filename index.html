@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="./image/downloadfile.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./image/downloadfile.png">
     <title>United States Army Roleplay Roblox</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="staff.css">
 </head>
 <body>
     <header>
@@ -13,22 +16,65 @@
         <h1>United States Army Roleplay</h1>
         </div>
 
+        <div id="announcementBanner">
+  <!-- 動態載入公告內容 -->
+        </div>
+
         <nav>
-        <a href="#" class="home-btn">Home</a>
+        <a href="index.html" class="home-btn">Home</a>
         <a href="ownership.html" class="owner-btn">Ownership</a>
-        <a href="#" onclick="showPage('thanks')">Special-Thanks</a>
-        <a href="#" onclick="showPage('gamepass')">Game-Passes</a>
-        <a href="#" onclick="showPage('application')">Career</a>
-    </nav>
+        <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+        <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+        <a href="application.html" class="career-btn">Career</a>
+        <a id="authButton" class="auth-btn" href="javascript:void(0)">
+        <span id="authButtonText">Staff</span>
+        </a>
+        </nav>
     </header>
 
+    <!-- Staff login -->
+
+   <div id="staffLoginModal" class="login-modal">
+    <div class="login-container">
+      <span class="close-modal">&times;</span>
+      <h2>Staff Login</h2>
+      <form id="staffLoginForm">
+        <input type="text" id="staffId" placeholder="Staff ID" required>
+        <input type="password" id="staffPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Staff login end -->
+
+  <!-- Staff dashboard -->
+
+  <!-- 確保HTML有呢個元素 -->
+<div id="staffDashboard" style="display:none;">
+  <!-- 內容會由JS動態生成 -->
+</div><!-- 確保HTML有呢個元素 -->
+
+  <!-- Staff dashboard end -->
+
+    <div id="staffDatabase" class="staff-database">
+        <!-- 這裡會顯示員工數據 -->
+    </div>
+
+
+  <!-- Text -->
 
     <div class="container">
         <!-- 主页 -->
         <div id="home" class="page active">
             <h2>Welcome to United States Roleplay</h2>
             <p>Try the realistic army life now!    Uh.. Still in develope now...</p>
-            
+   
+            <!-- Text End-->
+
+
+            <!-- Countdown -->
+
             <!-- 倒计时 -->
             <div id="countdown">
                 <h3>Game Release Countdown</h3>
@@ -43,8 +89,9 @@
                 <div class="countdown-subtext">T-MINUS TO LAUNCH</div>
             </div>
 
+        <!-- Countdown end -->
+
         <!-- 其他页面内容保持不变... -->
-    </div>
 
     <footer>
         <div class="social-links">
@@ -53,9 +100,17 @@
             <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
         </div>
-        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</
+        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+        <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/staff/utils.js"></script>
+    <script src="js/staff/auth.js"></script>
+    <script src="js/staff/dashboard.js"></script>
+    <script src="js/staff/main.js"></script>
+    <script src="js/staff/ui.js"></script>
+
 </body>
 </html>

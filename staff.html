@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Staff Dashboard</title>
+  <link rel="stylesheet" href="staff.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="home-btn">Home</a>
+      <a href="ownership.html" class="owner-btn">Ownership</a>
+      <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+      <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+      <a href="application.html" class="career-btn">Career</a>
+      <a id="authButton" class="auth-btn" href="javascript:void(0)">
+        <span id="authButtonText">Staff</span>
+      </a>
+      <button id="logoutBtn" class="logout-btn">登出</button>
+    </nav>
+  </header>
+
+  <!-- 只保留一個 staffDashboard -->
+  <main>
+    <div id="staffDashboard" style="display:none;">
+      <!-- 內容會由JavaScript動態生成 -->
+    </div>
+  </main>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
+    </div>
+    <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+    <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
+  </footer>
+
+  <!-- 簡化腳本加載順序 -->
+  <script>
+    // 預檢查
+    document.addEventListener('DOMContentLoaded', function() {
+      const authData = JSON.parse(localStorage.getItem('staffAuth'));
+      if (!authData) {
+        alert('請先登入');
+        window.location.href = 'index.html';
+        return;
+      }
+    });
+  </script>
+  
+  <!-- 按正確順序加載 -->
+  <script src="js/staff/utils.js"></script>
+  <script src="js/staff/auth.js"></script>
+  <script src="js/staff/dashboard.js"></script>  <!-- This contains our new code -->
+  <script src="js/staff/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
