@@ -2,7 +2,30 @@
 <html>
 <head>
   <title>Staff Dashboard</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="staff.css">
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 清除可能的错误状态
+      sessionStorage.removeItem('loginError');
+      
+      // 检查登录状态
+      const authData = JSON.parse(localStorage.getItem('staffAuth'));
+      if (!authData?.id) {
+        sessionStorage.setItem('loginRedirect', 'true');
+        window.location.replace('index.html?reason=unauthorized');
+        return;
+      }
+      
+      // 显示登出按钮
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) logoutBtn.style.display = 'block';
+    });
+  </script>
 </head>
 <body>
   <header>
@@ -15,7 +38,7 @@
       <a id="authButton" class="auth-btn" href="javascript:void(0)">
         <span id="authButtonText">Staff</span>
       </a>
-      <button id="logoutBtn" class="logout-btn">登出</button>
+      <button id="logoutBtn" class="logout-btn" style="display:none;">Logout</button>
     </nav>
   </header>
 
@@ -42,7 +65,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const authData = JSON.parse(localStorage.getItem('staffAuth'));
       if (!authData) {
-        alert('請先登入');
+        alert('Please log in first.');
         window.location.href = 'index.html';
         return;
       }
@@ -52,8 +75,7 @@
   <!-- 按正確順序加載 -->
   <script src="js/staff/utils.js"></script>
   <script src="js/staff/auth.js"></script>
-  <script src="js/staff/dashboard.js"></script>  <!-- This contains our new code -->
+  <script src="js/staff/dashboard.js"></script>
   <script src="js/staff/ui.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>
