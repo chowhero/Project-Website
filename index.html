@@ -14,134 +14,130 @@
     <link rel="stylesheet" href="staff.css">
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 检查URL参数
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromLogout = urlParams.has('fromLogout');
-    
-    // 如果是登出后的跳转
-    if (fromLogout) {
-        // 确保清除所有认证数据
-        localStorage.removeItem('staffAuth');
-        sessionStorage.removeItem('justLoggedOut');
-        return;
-    }
-    
-    // 如果已登录，跳转到仪表板
-    const authData = JSON.parse(localStorage.getItem('staffAuth'));
-    if (authData?.id) {
-        setTimeout(() => {
-            window.location.replace('staff.html');
-        }, 50);
-    }
-});
-</script>
+    // 增强版初始化脚本
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. 清除Service Worker缓存
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(regs => {
+                regs.forEach(reg => reg.unregister());
+                caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => caches.delete(cacheName));
+                });
+            });
+        }
+
+        // 2. 检查URL参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromLogout = urlParams.has('fromLogout');
+        const forceClear = urlParams.has('forceClear');
+
+        // 3. 强制清除模式
+        if (forceClear) {
+            localStorage.clear();
+            sessionStorage.clear();
+            history.replaceState({}, '', location.pathname);
+            return;
+        }
+
+        // 4. 处理登出后的状态
+        if (fromLogout) {
+            localStorage.removeItem('staffAuth');
+            sessionStorage.setItem('logoutTimestamp', Date.now());
+            history.replaceState({}, '', location.pathname);
+            return;
+        }
+
+        // 5. 登录状态检查（带5秒冷却时间）
+        try {
+            const authData = JSON.parse(localStorage.getItem('staffAuth'));
+            const logoutTime = sessionStorage.getItem('logoutTimestamp');
+            
+            // 冷却期检查（5秒内不允许自动跳转）
+            const isInCooldown = logoutTime && (Date.now() - logoutTime < 5000);
+            
+            if (authData?.id && !isInCooldown) {
+                setTimeout(() => {
+                    window.location.replace(`staff.html?from=index&r=${Math.random()}`);
+                }, 100);
+            }
+        } catch(e) {
+            localStorage.removeItem('staffAuth');
+        }
+    });
+    </script>
 </head>
 <body>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <script>
-  // 在其他脚本之前加载
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      registrations.forEach(registration => {
-        registration.unregister();
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            caches.delete(cacheName);
-          });
-        });
-      });
-    });
-  }
-</script>
-
     <header>
         <div class="title-group">
-        <h1>United States Army Roleplay</h1>
-        </div>
-
-        <div id="announcementBanner">
-  <!-- 動態載入公告內容 -->
+            <h1>United States Army Roleplay</h1>
         </div>
 
         <nav>
-        <a href="index.html" class="home-btn">Home</a>
-        <a href="ownership.html" class="owner-btn">Ownership</a>
-        <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
-        <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
-        <a href="application.html" class="career-btn">Career</a>
-        <a id="authButton" class="auth-btn" href="javascript:void(0)">
-        <span id="authButtonText">Staff</span>
-        </a>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+            <a id="authButton" class="auth-btn" href="javascript:void(0)">
+                <span id="authButtonText">Staff Login</span>
+            </a>
         </nav>
     </header>
 
-    <!-- Staff login -->
-
-   <div id="staffLoginModal" class="login-modal">
-    <div class="login-container">
-      <span class="close-modal">&times;</span>
-      <h2>Staff</h2>
-      <form id="staffLoginForm">
-        <input type="text" id="staffId" placeholder="Staff ID" required>
-        <input type="password" id="staffPassword" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
+    <!-- Staff Login Modal -->
+    <div id="staffLoginModal" class="login-modal">
+        <div class="login-container">
+            <span class="close-modal">&times;</span>
+            <h2>Staff Login</h2>
+            <form id="staffLoginForm">
+                <input type="text" id="staffId" placeholder="Staff ID" required>
+                <input type="password" id="staffPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
     </div>
-  </div>
-
-  <!-- Staff login end -->
-
-  <!-- Staff dashboard -->
-
-  <!-- 確保HTML有呢個元素 -->
-<div id="staffDashboard" style="display:none;">
-  <!-- 內容會由JS動態生成 -->
-</div><!-- 確保HTML有呢個元素 -->
-
-  <!-- Staff dashboard end -->
-
-    <div id="staffDatabase" class="staff-database">
-        <!-- 這裡會顯示員工數據 -->
-    </div>
-
-
-  <!-- Text -->
 
     <div class="container">
-        <!-- 主页 -->
         <div id="home" class="page active">
             <h2>Welcome to United States Roleplay</h2>
-            <p>Try the realistic army life now!    Uh.. Still in develope now...</p>
-   
-            <!-- Text End-->
+            <p>Try the realistic army life now! Uh.. Still in development now...</p>
+            
+            <div id="announcements-container">
+    <!-- 公告將動態加載 -->
+</div>
 
+<script>
+// 從後端獲取公告
+fetch('/api/announcements')
+    .then(res => res.json())
+    .then(announcements => {
+        const container = document.getElementById('announcements-container');
+        announcements.forEach(ann => {
+            container.innerHTML += `
+                <div class="announcement ${ann.priority}">
+                    <h3>${ann.title}</h3>
+                    <p>${ann.content}</p>
+                    <small>${new Date(ann.created_at).toLocaleString()}</small>
+                </div>
+            `;
+        });
+    });
+</script>
 
-            <!-- Countdown -->
-
-            <!-- 倒计时 -->
             <div id="countdown">
                 <h3>Game Release Countdown</h3>
                 <div id="timer">
-                    <span id="years">0</span>Y
-                    <span id="months">0</span>M 
-                    <span id="days">0</span>D
-                    <span id="hours">0</span>H
-                    <span id="minutes">0</span>Min
-                    <span id="seconds">0</span>Sec 
+                    <span id="years">0</span>Y <span id="months">0</span>M 
+                    <span id="days">0</span>D <span id="hours">0</span>H
+                    <span id="minutes">0</span>Min <span id="seconds">0</span>Sec
                 </div>
                 <div class="countdown-subtext">T-MINUS TO LAUNCH</div>
             </div>
-
-        <!-- Countdown end -->
-
-        <!-- 其他页面内容保持不变... -->
+        </div>
+    </div>
 
     <footer>
         <div class="social-links">
-            <!-- 社交媒体图标 -->
             <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
             <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
@@ -150,13 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
     </footer>
 
-    <script src="js/script.js"></script>
-    <script src="js/main.js"></script>
+    <!-- 脚本加载 -->
+    <script src="js/staff/staff-auth.js"></script>
     <script src="js/staff/utils.js"></script>
-    <script src="js/staff/auth.js"></script>
-    <script src="js/staff/dashboard.js"></script>
-    <script src="js/staff/main.js"></script>
-    <script src="js/staff/ui.js"></script>
-
+    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
+    <script src="/js/staff/function/staff-announcements.js"></script>
 </body>
 </html>

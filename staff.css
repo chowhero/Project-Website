@@ -230,7 +230,29 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
+.announcement {
+    border-left: 4px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+.announcement.high {
+    border-left-color: red;
+    background: #ffeeee;
+}
+.announcement.medium {
+    border-left-color: orange;
+}
 
+/* 招聘卡片樣式 */
+.job-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+.job-card h3 {
+    color: #2c3e50;
+}
 
 /* 响应式设计 */
 @keyframes shake {

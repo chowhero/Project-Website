@@ -20,9 +20,30 @@
         <a href="application.html" class="career-btn">Career</a>
         <a id="staffButton" class="staff-btn">Staff</a>
 
-        <div id="careerPosts" class="career-grid">
-            <!-- 招聘信息會顯示喺度 -->
-        </div>
+ <div id="jobs-container" class="job-list">
+    <!-- 招聘信息將動態加載 -->
+</div>
+
+<script>
+// 從後端獲取招聘
+fetch('/api/jobs')
+    .then(res => res.json())
+    .then(jobs => {
+        const container = document.getElementById('jobs-container');
+        jobs.forEach(job => {
+            container.innerHTML += `
+                <div class="job-card">
+                    <h3>${job.title} - ${job.department}</h3>
+                    <p>${job.description}</p>
+                    <h4>要求：</h4>
+                    <p>${job.requirements}</p>
+                    <a href="${job.apply_url}" target="_blank">立即申請</a>
+                </div>
+            `;
+        });
+    });
+</script>
+
 
     </nav>
     </header>
@@ -49,6 +70,8 @@
         <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
         <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
     </footer>
+
+    <script src="/js/staff/function/staff-career.js"></script>
 </body>
 
 </html>

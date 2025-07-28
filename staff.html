@@ -1,81 +1,251 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Staff Dashboard</title>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="staff.css">
+    <title>Staff Dashboard</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="staff.css">
 
-  <script>
+    <style>
+        /* 登出界面样式 */
+        .logout-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            font-family: sans-serif;
+        }
+        .logout-screen h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script>
+    // 严格初始化检查
     document.addEventListener('DOMContentLoaded', function() {
-      // 清除可能的错误状态
-      sessionStorage.removeItem('loginError');
-      
-      // 检查登录状态
-      const authData = JSON.parse(localStorage.getItem('staffAuth'));
-      if (!authData?.id) {
-        sessionStorage.setItem('loginRedirect', 'true');
-        window.location.replace('index.html?reason=unauthorized');
-        return;
-      }
-      
-      // 显示登出按钮
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) logoutBtn.style.display = 'block';
+        // 1. 验证登录状态
+        const authData = JSON.parse(localStorage.getItem('staffAuth'));
+        const logoutTime = sessionStorage.getItem('logoutTimestamp');
+        
+        // 2. 如果未登录或刚刚登出
+        if (!authData?.id || (logoutTime && Date.now() - logoutTime < 10000)) {
+            window.location.replace('index.html?fromLogout=true');
+            return;
+        }
+
+        // 3. 初始化登出按钮
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.style.display = 'block';
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 显示登出界面
+                document.body.innerHTML = `
+                    <div class="logout-screen">
+                        <h2>Logout Successful</h2>
+                        <p>Returning to homepage...</p>
+                    </div>
+                `;
+                
+                // 清除数据并跳转
+                localStorage.removeItem('staffAuth');
+                sessionStorage.setItem('logoutTimestamp', Date.now());
+                
+                setTimeout(() => {
+                    window.location.replace('index.html?fromLogout=true&t='+Date.now());
+                }, 800);
+            });
+        }
+
+        // 4. 初始化仪表板
+        const staffDashboard = document.getElementById('staffDashboard');
+        if (staffDashboard) {
+            staffDashboard.style.display = 'block';
+        }
     });
-  </script>
+    </script>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="index.html" class="home-btn">Home</a>
-      <a href="ownership.html" class="owner-btn">Ownership</a>
-      <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
-      <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
-      <a href="application.html" class="career-btn">Career</a>
-      <a id="authButton" class="auth-btn" href="javascript:void(0)">
-        <span id="authButtonText">Staff</span>
-      </a>
-      <button id="logoutBtn" class="logout-btn" style="display:none;">Logout</button>
-    </nav>
-  </header>
+    <header>
+        <nav>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </header>
 
-  <!-- 只保留一個 staffDashboard -->
-  <main>
-    <div id="staffDashboard" style="display:none;">
-      <!-- 內容會由JavaScript動態生成 -->
-    </div>
-  </main>
+    <main>
+        <div id="staffDashboard">
+            <!-- 内容由dashboard.js动态生成 -->
+        </div>
 
-  <footer>
-    <div class="social-links">
-      <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
-      <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
-    </div>
-    <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
-    <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
-  </footer>
+        <!-- 公告發布區域 -->
+<div class="staff-function" id="announcement-section">
+  <h3>Post Announcement</h3>
+  <div class="form-group">
+    <label for="announcement-title">Announcement Title</label>
+    <input type="text" id="announcement-title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="announcement-text">Announcement Description</label>
+    <textarea id="announcement-text" class="form-control" rows="5"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="announcement-priority">Priority</label>
+    <select id="announcement-priority" class="form-control">
+      <option value="normal">Normal</option>
+      <option value="important">Important</option>
+      <option value="urgent">Emergency</option>
+    </select>
+  </div>
+  <button id="post-announcement" class="btn btn-primary">Post Announcement</button>
 
-  <!-- 簡化腳本加載順序 -->
-  <script>
-    // 預檢查
-    document.addEventListener('DOMContentLoaded', function() {
-      const authData = JSON.parse(localStorage.getItem('staffAuth'));
-      if (!authData) {
-        alert('Please log in first.');
-        window.location.href = 'index.html';
-        return;
-      }
-    });
-  </script>
+  <div class="staff-function" id="career-section">
+  <h3>Career Post</h3>
   
-  <!-- 按正確順序加載 -->
-  <script src="js/staff/utils.js"></script>
-  <script src="js/staff/auth.js"></script>
-  <script src="js/staff/dashboard.js"></script>
-  <script src="js/staff/ui.js"></script>
+  <div class="form-group">
+    <label for="job-title">Job Title</label>
+    <input type="text" id="job-title" class="form-control" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="job-department">Division</label>
+    <select id="job-department" class="form-control">
+      <option value="IT">Military Education Department</option>
+      <option value="HR">Military Police</option>
+      <option value="Finance">財務</option>
+      <option value="Marketing">市場營銷</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="job-description">Description</label>
+    <textarea id="job-description" class="form-control" rows="5" required></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="job-requirements">Requirements</label>
+    <textarea id="job-requirements" class="form-control" rows="5" required></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="job-link">Apply Link</label>
+    <input type="url" id="job-link" class="form-control" required>
+  </div>
+  
+  <button id="post-job" class="btn btn-primary">Post Career</button>
+
+  <div class="staff-function" id="add-member-section">
+  <h3>新增職員</h3>
+  
+  <div class="form-group">
+    <label for="new-staff-id">職員編號</label>
+    <input type="text" id="new-staff-id" class="form-control" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="new-staff-name">職員姓名</label>
+    <input type="text" id="new-staff-name" class="form-control" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="new-staff-password">密碼</label>
+    <input type="password" id="new-staff-password" class="form-control" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="new-staff-type">職員類型</label>
+    <select id="new-staff-type" class="form-control">
+      <option value="US HR">US HR</option>
+      <option value="Division HR">Division HR</option>
+    </select>
+  </div>
+  
+  <button id="add-staff" class="btn btn-primary">新增職員</button>
+  
+  <!-- 職員列表 -->
+  <div class="staff-list mt-4">
+    <h4>職員列表</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>職員編號</th>
+          <th>姓名</th>
+          <th>類型</th>
+          <th>加入日期</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="staff-list-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// 發布公告到首頁
+function postAnnouncement() {
+    const data = {
+        title: document.getElementById('announce-title').value,
+        content: document.getElementById('announce-content').value,
+        priority: document.getElementById('announce-priority').value
+    };
+    fetch('/api/announcements', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    }).then(response => alert('公告已發布！'));
+}
+
+// 發布招聘到招聘頁
+function postJob() {
+    const data = {
+        title: document.getElementById('job-title').value,
+        department: document.getElementById('job-department').value,
+        description: document.getElementById('job-description').value,
+        requirements: document.getElementById('job-requirements').value,
+        apply_url: document.getElementById('job-url').value
+    };
+    fetch('/api/jobs', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    }).then(response => alert('招聘已發布！'));
+}
+</script>
+
+  
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
+        </div>
+        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+    </footer>
+
+    <!-- 脚本加载 -->
+    <script src="js/staff/utils.js"></script>
+    <script src="js/staff/dashboard.js"></script>
+    <script src="js/staff/ui.js"></script>
+    <script src="/js/staff/function/staff-announcements.js"></script>
+    <script src="/js/staff/function/staff-career.js"></script>
+    <script src="/js/staff/function/staff-management.js"></script>
+    <script src="/js/staff/function/staff-auth.js"></script>
 </body>
 </html>
