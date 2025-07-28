@@ -1,4 +1,3 @@
-/* 全局变量 */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 
@@ -7,17 +6,37 @@
     --navy-blue: #1a1a40;  /* 啞光海軍藍 */
     --soft-blue: #2d2d5a;   /* 按鈕用藍 */
     --white: #e6e6e6;       /* 柔白 */
+    --black: #1b1b1b;       /* 深黑 */
     --gray: #4e4e4e;
     --highlight: #4dff4d;   /* 柔和軍事綠 */
 }
 
-/* 頂部標題欄 - 左上對齊 */
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--dark-blue);
     color: var(--white);
     margin: 0;
     padding: 0;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    white-space: nowrap;    /* 防止标题换行 */
+}
+
+header {
+    background-color: var(--dark-blue);
+    padding: 25px;
+    display: flex;           /* 启用弹性布局 */
+    align-items: center;     /* 垂直居中 */
+    justify-content: space-between; /* 标题左，按钮右 */
+    border-bottom: 1px solid var(--soft-blue);
+}
+
+header h1 {
+    font-size: 1rem; /* 超小标题 */
+    letter-spacing: 0; /* 取消字母间距 */
 }
 
 footer {
@@ -95,45 +114,6 @@ nav a:hover {
     display: block;
 }
 
-.logout-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.3s;
-}
-
-.logout-btn:hover {
-  background: #c0392b;
-}
-
-/* 導航欄樣式 */
-nav {
-  display: flex;
-  gap: 10px;
-  padding: 15px;
-  background: #2c3e50;
-}
-
-nav a, nav button {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-/* 確保staffDashboard可見 */
-#staffDashboard {
-  padding: 20px;
-  min-height: 60vh;
-}
-
-
 /* 社交媒体图标 */
 .social-links {
     display: flex;
@@ -153,6 +133,21 @@ nav a, nav button {
     transition: transform 0.3s;
 }
 
+/* 移除所有社交图标的下划线 */
+.social-links a {
+  text-decoration: none !important;
+}
+
+/* 如果仍有残留边框/线条，添加以下规则 */
+.social-links .social-icon {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
 /* Discord 图标专属样式 */
 .social-icon.discord i {
   color: #5865F2; /* Discord 蓝 */
@@ -167,16 +162,7 @@ nav a, nav button {
     color: #ff0000; /* YouTube 红 */
 }
 
-.social-icon:hover {
-    transform: scale(1.1);
-}
-
 /* 响应式设计 */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
-}
 
 @media (max-width: 768px) {
     header {
