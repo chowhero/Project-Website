@@ -4,23 +4,28 @@ const staffAccounts = {
   "DivisionHR": {password:"12345", type:"division_hr"}
 };
 
+// 新增：统一页面名称
+const DASHBOARD_PAGE = "dashboard.html";
+const INDEX_PAGE = "index.html";
+
 function checkLoginStatus() {
-  return localStorage.getItem('staffAuth') !== null;
+  const authData = localStorage.getItem('staffAuth');
+  return authData !== null && authData !== "loggedOut";
 }
 
-function updateAuthButton(isLoggedIn, userType = null) {
+function updateAuthButton(isLoggedIn) {
   const authButton = document.getElementById('authButton');
   const buttonText = document.getElementById('authButtonText');
   
   if (!authButton || !buttonText) {
-    console.error('Can\'t find button!');
+    console.error('找不到按钮元素');
     return;
   }
 
   if (isLoggedIn) {
     buttonText.textContent = 'Staff Dashboard';
     authButton.onclick = function() {
-      window.location.href = 'staff.html';
+      window.location.href = DASHBOARD_PAGE;
     };
     authButton.classList.add('dashboard-state');
     authButton.classList.remove('login-state');
@@ -34,44 +39,47 @@ function updateAuthButton(isLoggedIn, userType = null) {
   }
 }
 
-// 檢查登入狀態
 function handleLoginSubmit(e) {
-  e.preventDefault();
-  
-  const staffId = document.getElementById('staffId').value;
-  const password = document.getElementById('staffPassword').value;
-  
-  if (staffAccounts[staffId] && staffAccounts[staffId].password === password) {
-    // 儲存登入狀態
-    localStorage.setItem('staffAuth', JSON.stringify({
-      id: staffId,
-      type: staffAccounts[staffId].type
-    }));
+    e.preventDefault();
     
-    updateAuthButton(true, staffAccounts[staffId].type);
-    window.location.href = 'staff.html';
-  } else {
-    alert('Failed to login! Please check your ID and password!');
+    const staffId = document.getElementById('staffId').value;
+    const password = document.getElementById('staffPassword').value;
+
+    if (staffAccounts[staffId] && staffAccounts[staffId].password === password) {
+        // 存储登录状态
+        localStorage.setItem('staffAuth', JSON.stringify({
+            id: staffId,
+            type: staffAccounts[staffId].type,
+            timestamp: Date.now()
+        }));
+        
+        // 清除可能的登出标记
+        sessionStorage.removeItem('justLoggedOut');
+        
+        // 跳转到仪表板
+        window.location.replace('staff.html?from=login');
+    } else {
+        alert('Login failed! Please check your credentials.');
+    }
+}
+
+// 初始化函数
+function initAuth() {
+  updateAuthButton(checkLoginStatus());
+  
+  // 绑定登录表单
+  const loginForm = document.getElementById('staffLoginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleLoginSubmit);
+  }
+  
+  // 仪表板页面检查
+  if (window.location.pathname.includes(DASHBOARD_PAGE)) {
+    if (!checkLoginStatus()) {
+      window.location.replace(INDEX_PAGE + '?from=unauthorized');
+    }
   }
 }
 
-// 頁面初始化
-document.addEventListener('DOMContentLoaded', function() {
-  updateAuthButton(checkLoginStatus());
-});
-
-// 在每個頁面都需要放置的檢查代碼
-document.addEventListener('DOMContentLoaded', function() {
-  // 儀表板頁面檢查
-  if (window.location.pathname.includes('staff.html')) {
-    if (!checkLoginStatus()) {
-      window.location.href = 'index.html';
-    }
-  }
-  
-  // 更新首頁按鈕狀態
-  updateAuthButton(checkLoginStatus());
-});
-
-// 綁定事件 (確保有呢行)
-document.getElementById('staffLoginForm').addEventListener('submit', handleLoginSubmit);
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', initAuth);

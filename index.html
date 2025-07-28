@@ -3,14 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="apple-touch-icon" sizes="180x180" href="./image/downloadfile.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./image/downloadfile.png">
     <title>United States Army Roleplay Roblox</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="staff.css">
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 检查URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromLogout = urlParams.has('fromLogout');
+    
+    // 如果是登出后的跳转
+    if (fromLogout) {
+        // 确保清除所有认证数据
+        localStorage.removeItem('staffAuth');
+        sessionStorage.removeItem('justLoggedOut');
+        return;
+    }
+    
+    // 如果已登录，跳转到仪表板
+    const authData = JSON.parse(localStorage.getItem('staffAuth'));
+    if (authData?.id) {
+        setTimeout(() => {
+            window.location.replace('staff.html');
+        }, 50);
+    }
+});
+</script>
 </head>
 <body>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+  // 在其他脚本之前加载
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      registrations.forEach(registration => {
+        registration.unregister();
+        caches.keys().then(cacheNames => {
+          cacheNames.forEach(cacheName => {
+            caches.delete(cacheName);
+          });
+        });
+      });
+    });
+  }
+</script>
+
     <header>
         <div class="title-group">
         <h1>United States Army Roleplay</h1>
@@ -37,7 +83,7 @@
    <div id="staffLoginModal" class="login-modal">
     <div class="login-container">
       <span class="close-modal">&times;</span>
-      <h2>Staff Login</h2>
+      <h2>Staff</h2>
       <form id="staffLoginForm">
         <input type="text" id="staffId" placeholder="Staff ID" required>
         <input type="password" id="staffPassword" placeholder="Password" required>
