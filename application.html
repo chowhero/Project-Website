@@ -6,6 +6,16 @@
     <title>Ownership - United States Army Roleplay</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="specialthanks.css"> 
+
+    <title>Division Career</title>
+    <style>
+        .job-card {
+            background: #eef7ff;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,31 +28,30 @@
         <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
         <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
         <a href="application.html" class="career-btn">Career</a>
-        <a id="staffButton" class="staff-btn">Staff</a>
+         <a href="login.html" class="login-btn">Staff</a>
+ <h1>💼 | Division Application</h1>
+    <div id="jobs-container"></div>
 
- <div id="jobs-container" class="job-list">
-    <!-- 招聘信息將動態加載 -->
-</div>
-
-<script>
-// 從後端獲取招聘
-fetch('/api/jobs')
-    .then(res => res.json())
-    .then(jobs => {
+    <script>
+        // 從 localStorage 讀取招聘
+        const jobs = JSON.parse(localStorage.getItem('jobs') || []);
         const container = document.getElementById('jobs-container');
-        jobs.forEach(job => {
-            container.innerHTML += `
-                <div class="job-card">
-                    <h3>${job.title} - ${job.department}</h3>
-                    <p>${job.description}</p>
-                    <h4>要求：</h4>
-                    <p>${job.requirements}</p>
-                    <a href="${job.apply_url}" target="_blank">立即申請</a>
-                </div>
-            `;
-        });
-    });
-</script>
+        
+        if (jobs.length === 0) {
+            container.innerHTML = '<p>No announcement current@</p>';
+        } else {
+            jobs.forEach(job => {
+                container.innerHTML += `
+                    <div class="job-card">
+                        <h3>${job.title}</h3>
+                        <p>${job.description}</p>
+                        <a href="${job.link}" target="_blank">👉 Apply now!</a>
+                        <small>${job.date}</small>
+                    </div>
+                `;
+            });
+        }
+    </script>
 
 
     </nav>
