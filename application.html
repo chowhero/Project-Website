@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Career - United States Army Roleplay</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="application.css"> 
@@ -21,9 +21,11 @@
         <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
         <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
         <a href="application.html" class="career-btn">Career</a>
-         <a href="login.html" class="login-btn">Staff</a>
+        <a href="login.html" class="login-btn">Staff</a>
 
- <h1>💼 | Division Application</h1>
+
+ <h1 class="career-title">Division Application</h1>
+
     <div id="jobs-container"></div>
 
     <script>
@@ -32,7 +34,7 @@
         const container = document.getElementById('jobs-container');
         
         if (jobs.length === 0) {
-            container.innerHTML = '<p>No announcement current@</p>';
+        container.innerHTML = '<div class="no-jobs-container"><p>No careers currently available</p></div>';
         } else {
             jobs.forEach(job => {
                 container.innerHTML += `
