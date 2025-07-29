@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+body.no-scroll {
+    overflow: hidden; /* 禁止所有滾動 */
+}
 
 :root {
     --dark-blue: #0f2442;  /* 深暗藍（接近黑）*/
@@ -11,9 +14,19 @@
     --highlight: #4dff4d;   /* 柔和軍事綠 */
 }
 
-.job-list {
-    display: flex;
-    flex-direction: column; /* 垂直排列 */
-    align-items: center; /* 水平居中 */
-    margin-top: 20px; /* 顶部间距 */
+.career-title {
+    height: 25px;
+    text-align: center;
+    position: relative;
+    right: 620px;
+    top: 100px;
+}
+
+.no-jobs-container{
+    width: 240px;
+    text-align: center;
+    position: relative;
+    right: 820px;
+    top: 250px;
+    white-space: nowrap;
 }
