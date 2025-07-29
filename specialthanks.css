@@ -13,6 +13,9 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+    background-attachment: fixed;
     background-color: var(--dark-blue);
     color: var(--white);
     margin: 0;
@@ -26,12 +29,13 @@ header h1 {
 }
 
 header {
-    background-color: var(--dark-blue);
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     padding: 25px;
     display: flex;           /* 启用弹性布局 */
     align-items: center;     /* 垂直居中 */
     justify-content: space-between; /* 标题左，按钮右 */
-    border-bottom: 1px solid var(--soft-blue);
+    border-bottom: 1px solid var(--dark-blue);
 }
 
 header h1 {
@@ -42,11 +46,12 @@ header h1 {
 footer {
     font-size: 0.7rem;
     text-align: center; /* 新增呢行 */
-    background-color: var(--dark-blue);
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     color: var(--white);
     padding: 20px;
     margin-top: 40px;
-    border-top: 0.5px solid var(--soft-blue);
+    border-top: 0.5px solid var(--dark-blue);
 }
 
 footer p {
@@ -80,6 +85,8 @@ nav a {
 nav a:hover {
     background-color: var(--gray);
     color: var(--white);
+    box-shadow: 0 5px 20px black;
+    border: 1px solid var(--white);
 }
 
 .container {

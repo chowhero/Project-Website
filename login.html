@@ -7,40 +7,49 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="">
+    <form id="loginForm" onsubmit="return login()">
     <h1>Staff Login</h1>
     <div class="input-box">
-    <input type="text" id="username" placeholder="Staff ID">
+    <input type="text" id="username" autocapitalize="none" placeholder="Staff ID">
     <i class="fa-solid fa-user"></i>
     </div>
     <div class="input-box">
-    <input type="password" id="password" placeholder="Password">
+    <input type="password" id="password" autocapitalize="none" placeholder="Password">
     <i class="fa-solid fa-lock"></i>
     </div>
     <button class="btn" onclick="login()">Login</button>
     </form>
     
+    <a href="index.html" class="back-btn">Back</a>
+
     <script>
         // 初始化默認管理員 (如果未存在)
-        if (!localStorage.getItem('staff')) {
+         if (!localStorage.getItem('staff')) {
             localStorage.setItem('staff', JSON.stringify([
                 { username: 'admin', password: 'admin123', type: 'admin' }
             ]));
         }
 
         function login() {
+            // 獲取表單值
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
+            // 驗證用戶
             const staff = JSON.parse(localStorage.getItem('staff') || []);
             const user = staff.find(u => u.username === username && u.password === password);
             
             if (user) {
+                // 儲存登入狀態
                 localStorage.setItem('currentUser', JSON.stringify(user));
+                // 跳轉到管理頁面
                 window.location.href = 'staff.html';
             } else {
-                alert('❌ | Staff ID or password is incorrect!');
+                alert('Staff ID or Password is incoprrect!');
             }
+            
+            // 阻止表單默認提交行為
+            return false;
         }
     </script>
 </body>
