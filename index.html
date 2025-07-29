@@ -65,6 +65,15 @@
         }
     });
     </script>
+     <title>Announcement</title>
+    <style>
+        .announcement {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -78,9 +87,7 @@
             <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
             <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
             <a href="application.html" class="career-btn">Career</a>
-            <a id="authButton" class="auth-btn" href="javascript:void(0)">
-                <span id="authButtonText">Staff Login</span>
-            </a>
+            <a href="login.html" class="login-btn">Staff</a>
         </nav>
     </header>
 
@@ -102,9 +109,32 @@
             <h2>Welcome to United States Roleplay</h2>
             <p>Try the realistic army life now! Uh.. Still in development now...</p>
             
-            <div id="announcements-container">
-    <!-- 公告將動態加載 -->
-</div>
+    <h1>📢 Announcement</h1>
+    <div id="announcement-list"></div>
+    <div id="announcements-container"></div>
+
+    <script>
+        // 從 localStorage 讀取公告
+        function loadAnnouncements() {
+    const announcements = JSON.parse(localStorage.getItem('announcements') || []);
+    const list = document.getElementById('announcement-list');
+    list.innerHTML = '';
+    
+    announcements.forEach((ann, index) => {
+        list.innerHTML += `
+            <div style="border:1px solid #ddd; padding:10px; margin:5px;">
+                <strong>${ann.title}</strong>
+                <p>${ann.content}</p>
+                <small>${ann.date}</small>
+            </div>
+        `;
+    });
+}
+
+// 頁面加載時自動顯示
+loadAnnouncements();
+    </script>
+        </div>
 
 <script>
 // 從後端獲取公告
