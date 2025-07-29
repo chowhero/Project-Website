@@ -19,20 +19,27 @@ html, body {
 /* 頂部標題欄 - 左上對齊 */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--dark-blue);
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     color: var(--white);
     margin: 0;
     padding: 0;
 }
 
+header{
+  background: #020024;
+background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+}
+
 footer {
     font-size: 0.7rem;
     text-align: center; /* 新增呢行 */
-    background-color: var(--dark-blue);
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     color: var(--white);
     padding: 20px;
     margin-top: 40px;
-    border-top: 0.5px solid var(--soft-blue);
+    border-top: 0.5px solid var(--dark-blue);
 }
 
 footer p {
@@ -50,6 +57,7 @@ nav {
     gap: 4px;               /* 按钮间距 */
     background: transparent; /* 移除背景色 */
     padding: 0;
+    
 }
 
 nav a {
@@ -57,20 +65,23 @@ nav a {
     color: var(--white);
     text-decoration: none;
     padding: 6px 12px;
-    border: 1px solid var(--);
     font-size: 0.9rem;
     white-space: nowrap;    /* 防止按钮文字换行 */
     transition: all 0.2s;
+    
 }
 
 nav a:hover {
     background-color: var(--gray);
     color: var(--white);
+    box-shadow: 0 5px 20px black;
+    border: 1px solid var(--white)
 }
 
 .container {
     padding: 0 0 0 20px;     /* 左側內距 */
     margin: 10px auto 0 0;   /* 取消自動居中 */
+    
 }
 
 .icon-container {
@@ -81,6 +92,7 @@ nav a:hover {
   height: 50px;
   background: var(--navy-blue);
   border-radius: 50%;
+  
 }
 
 .btn {
@@ -130,6 +142,7 @@ nav a, nav button {
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 4px;
+  
 }
 
 /* 確保staffDashboard可見 */
@@ -154,7 +167,7 @@ nav a, nav button {
     align-items: center;
     font-size: 1rem;
     background-color: transparent;
-    background-color: var(--dark-blue);
+    background-color: var(--navy-blue);
     transition: transform 0.3s;
 }
 
@@ -201,6 +214,7 @@ nav a, nav button {
   color: white;
   border-radius: 4px;
   z-index: 1000;
+  
 }
 
 /* 响应式设计 */
@@ -214,9 +228,11 @@ nav a, nav button {
     header {
         flex-direction: column;
         align-items: flex-start;
+        
     }
     nav {
         margin-top: 10px;
         flex-wrap: wrap;  /* 小屏幕时按钮换行 */
+        
     }
 }

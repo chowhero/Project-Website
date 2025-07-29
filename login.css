@@ -13,6 +13,9 @@ body {
     background: url(image/bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
+    text-transform: none !important;
+    font-variant: normal !important;
 }
 
 .wrapper{
@@ -23,6 +26,7 @@ body {
     color: #fff;
     border-radius: 12px;
     padding: 30px 40px;
+    box-shadow: 0 0 40px black;
 }
 
 .wrapper h1{
@@ -74,4 +78,18 @@ body {
     font-size: 16px;
     color: #333;
     font-weight: 600;
+}
+
+.back-btn{
+    position: relative;
+    left: 650px;
+    top: 155px;
+    background: #fff;
+    color: #1f1f1f;
+    text-decoration: none;
+    border-radius: 16px;
+    padding: 1px 4px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 0 10px black;
 }
