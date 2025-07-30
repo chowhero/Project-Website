@@ -84,6 +84,8 @@ nav a {
 nav a:hover {
     background-color: var(--gray);
     color: var(--white);
+    box-shadow: 0 4px 10px black;
+    border: 1px solid white;
 }
 
 .container {
