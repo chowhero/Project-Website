@@ -271,6 +271,7 @@ nav a:hover {
         flex-wrap: wrap;  /* 小屏幕时按钮换行 */
     }
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 
@@ -402,6 +403,11 @@ nav a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 10px black;
     transition: transform 0.3s ease;
+}
+
+#countdown:hover{
+    transform: translateY(-3px);
+
 }
 
 #timer {
