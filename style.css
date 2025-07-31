@@ -7,28 +7,40 @@
     --navy-blue: #1a1a40;  /* 啞光海軍藍 */
     --soft-blue: #2d2d5a;   /* 按鈕用藍 */
     --white: #e6e6e6;       /* 柔白 */
+    --black: #1b1b1b;       /* 深黑 */
     --gray: #4e4e4e;
     --highlight: #4dff4d;   /* 柔和軍事綠 */
 }
 
-html, body {
-  animation: none !important;
-  transition: none !important;
-}
-
-/* 頂部標題欄 - 左上對齊 */
 body {
     font-family: 'Montserrat', sans-serif;
     background: #020024;
     background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     color: var(--white);
+    background-color: var(--dark-blue);
     margin: 0;
     padding: 0;
 }
 
-header{
-  background: #020024;
-background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    white-space: nowrap;    /* 防止标题换行 */
+}
+
+header {
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+    padding: 25px;
+    display: flex;           /* 启用弹性布局 */
+    align-items: center;     /* 垂直居中 */
+    justify-content: space-between; /* 标题左，按钮右 */
+    border-bottom: 1px solid var(--soft-blue);
+}
+
+header h1 {
+    font-size: 1rem; /* 超小标题 */
+    letter-spacing: 0; /* 取消字母间距 */
 }
 
 footer {
@@ -38,8 +50,8 @@ footer {
     background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
     color: var(--white);
     padding: 20px;
-    margin-top: 40px;
     border-top: 0.5px solid var(--dark-blue);
+    margin-top: 280px;
 }
 
 footer p {
@@ -57,7 +69,6 @@ nav {
     gap: 4px;               /* 按钮间距 */
     background: transparent; /* 移除背景色 */
     padding: 0;
-    
 }
 
 nav a {
@@ -65,23 +76,22 @@ nav a {
     color: var(--white);
     text-decoration: none;
     padding: 6px 12px;
+    border: 1px solid var(--);
     font-size: 0.9rem;
     white-space: nowrap;    /* 防止按钮文字换行 */
     transition: all 0.2s;
-    
 }
 
 nav a:hover {
     background-color: var(--gray);
     color: var(--white);
-    box-shadow: 0 5px 20px black;
-    border: 1px solid var(--white)
+    box-shadow: 0 4px 10px black;
+    border: 1px solid white;
 }
 
 .container {
     padding: 0 0 0 20px;     /* 左側內距 */
     margin: 10px auto 0 0;   /* 取消自動居中 */
-    
 }
 
 .icon-container {
@@ -92,7 +102,6 @@ nav a:hover {
   height: 50px;
   background: var(--navy-blue);
   border-radius: 50%;
-  
 }
 
 .btn {
@@ -110,39 +119,6 @@ nav a:hover {
 
 .page.active {
     display: block;
-}
-
-.logout-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.3s;
-}
-
-.logout-btn:hover {
-  background: #c0392b;
-}
-
-/* 導航欄樣式 */
-nav {
-  display: flex;
-  gap: 10px;
-  padding: 15px;
-  background: #2c3e50;
-}
-
-nav a, nav button {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  
 }
 
 /* 確保staffDashboard可見 */
@@ -189,20 +165,11 @@ nav a, nav button {
     transform: scale(1.1);
 }
 
-.panel {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-
-.submit-btn {
-  background: #4CAF50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .alert {
@@ -216,7 +183,54 @@ nav a, nav button {
   z-index: 1000;
 }
 
+/* 倒计时样式 */
+#countdown {
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 500px;
+    background-color: var(--black);
+    color: var(--highlight);
+    border: 3px solid var(--);
+    text-shadow: 0 0 5px rgba(0,255,0,0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px black;
+    transition: transform 0.3s ease;
+    position: stickey;
+    top: 0; /* 黐住頂部 */
+    z-index: 100;
+}
 
+#countdown:hover{
+    transform: translateY(-3px);
+
+}
+
+#timer {
+    font-size: 1.8em;
+    letter-spacing: 2px;
+}
+
+#timer span {
+    display: inline-block;
+    min-width: 30px;
+    font-family: 'Courier New', monospace; /* 等宽字体 */
+    color: var(--highlight); /* 军事绿 */
+    text-shadow: 0 0 3px rgba(0,255,0,0.5); /* 荧光效果 */
+}
+
+#seconds {
+    color: white; /* 白色高亮 */
+    font-weight: bold;
+}
+
+
+.countdown-subtext {
+    font-size: 0.8em;
+    color: #ccc;
+    margin-top: 10px;
+}
 
 /* 响应式设计 */
 @keyframes shake {

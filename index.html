@@ -11,61 +11,7 @@
     <title>United States Army Roleplay Roblox</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="staff.css">
     <link rel="stylesheet" href="announcement.css">
-
-    <script>
-    // 增强版初始化脚本
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. 清除Service Worker缓存
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(regs => {
-                regs.forEach(reg => reg.unregister());
-                caches.keys().then(cacheNames => {
-                    cacheNames.forEach(cacheName => caches.delete(cacheName));
-                });
-            });
-        }
-
-        // 2. 检查URL参数
-        const urlParams = new URLSearchParams(window.location.search);
-        const fromLogout = urlParams.has('fromLogout');
-        const forceClear = urlParams.has('forceClear');
-
-        // 3. 强制清除模式
-        if (forceClear) {
-            localStorage.clear();
-            sessionStorage.clear();
-            history.replaceState({}, '', location.pathname);
-            return;
-        }
-
-        // 4. 处理登出后的状态
-        if (fromLogout) {
-            localStorage.removeItem('staffAuth');
-            sessionStorage.setItem('logoutTimestamp', Date.now());
-            history.replaceState({}, '', location.pathname);
-            return;
-        }
-
-        // 5. 登录状态检查（带5秒冷却时间）
-        try {
-            const authData = JSON.parse(localStorage.getItem('staffAuth'));
-            const logoutTime = sessionStorage.getItem('logoutTimestamp');
-            
-            // 冷却期检查（5秒内不允许自动跳转）
-            const isInCooldown = logoutTime && (Date.now() - logoutTime < 5000);
-            
-            if (authData?.id && !isInCooldown) {
-                setTimeout(() => {
-                    window.location.replace(`staff.html?from=index&r=${Math.random()}`);
-                }, 100);
-            }
-        } catch(e) {
-            localStorage.removeItem('staffAuth');
-        }
-    });
-    </script>
      <title>Announcement</title>
 </head>
 <body>
@@ -84,70 +30,7 @@
         </nav>
     </header>
 
-    <!-- Staff Login Modal -->
-    <div id="staffLoginModal" class="login-modal">
-        <div class="login-container">
-            <span class="close-modal">&times;</span>
-            <h2>Staff Login</h2>
-            <form id="staffLoginForm">
-                <input type="text" id="staffId" placeholder="Staff ID" required>
-                <input type="password" id="staffPassword" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="container">
-        <div id="home" class="page active">
-            <h2>Welcome to United States Roleplay</h2>
-            <p>Try the realistic army life now! Uh.. Still in development now...</p>
-            
-    <h1>📢 Announcement</h1>
-    <div id="announcement-list"></div>
-    <div id="announcements-container"></div>
-
-    <script>
-        // 從 localStorage 讀取公告
-        function loadAnnouncements() {
-    const announcements = JSON.parse(localStorage.getItem('announcements') || []);
-    const list = document.getElementById('announcement-list');
-    list.innerHTML = '';
-    
-    announcements.forEach((ann, index) => {
-        list.innerHTML += `
-            <div style="border:1px solid #ddd; padding:10px; margin:5px;">
-                <strong>${ann.title}</strong>
-                <p>${ann.content}</p>
-                <small>${ann.date}</small>
-            </div>
-        `;
-    });
-}
-
-// 頁面加載時自動顯示
-loadAnnouncements();
-    </script>
-        </div>
-
-<script>
-// 從後端獲取公告
-fetch('/api/announcements')
-    .then(res => res.json())
-    .then(announcements => {
-        const container = document.getElementById('announcements-container');
-        announcements.forEach(ann => {
-            container.innerHTML += `
-                <div class="announcement ${ann.priority}">
-                    <h3>${ann.title}</h3>
-                    <p>${ann.content}</p>
-                    <small>${new Date(ann.created_at).toLocaleString()}</small>
-                </div>
-            `;
-        });
-    });
-</script>
-
-            <div id="countdown">
+    <div id="countdown">
                 <h3>Game Release Countdown</h3>
                 <div id="timer">
                     <span id="years">0</span>Y <span id="months">0</span>M 
@@ -158,6 +41,60 @@ fetch('/api/announcements')
             </div>
         </div>
     </div>
+
+    <div class="announcements-section">
+    <h1>📢 Announcement</h1>
+    <div id="announcements-container" class="announcements-list">
+        <!-- 公告将通过JavaScript动态插入 -->
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('announcements-container');
+    if (!container) return;
+    
+    // 从localStorage加载公告
+    let announcements = [];
+    try {
+        announcements = JSON.parse(localStorage.getItem('announcements') || "[]");
+    } catch (e) {
+        console.error('解析公告数据出错:', e);
+    }
+    
+    // 如果没有数据，尝试从API获取
+    if (announcements.length === 0) {
+        fetch('/api/announcements')
+            .then(res => res.ok ? res.json() : [])
+            .then(apiAnnouncements => {
+                if (apiAnnouncements.length > 0) {
+                    localStorage.setItem('announcements', JSON.stringify(apiAnnouncements));
+                }
+                renderAnnouncements(apiAnnouncements);
+            })
+            .catch(console.error);
+    } else {
+        renderAnnouncements(announcements);
+    }
+    
+    function renderAnnouncements(announcements) {
+        container.innerHTML = announcements.length ? 
+            announcements.map(ann => `
+                <div class="announcement-card ${ann.priority === 'high' ? 'high-priority' : ''}">
+                    <h3>${ann.title || 'New Announcement'}</h3>
+                    <p>${ann.content || 'No description announcement'}</p>
+                    <div class="announcement-date">
+                        ${ann.date || ann.created_at || new Date().toLocaleString()}
+                    </div>
+                </div>
+            `).join('') : `
+                <div class="announcement-card no-announcements">
+                    <p>No announcement currently.</p>
+                </div>
+            `;
+    }
+});
+</script>
 
     <footer>
         <div class="social-links">
