@@ -80,3 +80,43 @@ body.no-scroll {
     content: "🕒";
     margin-right: 5px;
 }
+
+.announcement-function-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid var(--gray);
+    width: 300px;
+    height: 240px;
+    position: relative;
+    left: 30px;
+    top: 30px;
+    border-radius: 10px;
+}
+
+.announcement-function-box h2{
+    font-size: 15px;
+    position: relative;
+    left: 5px;
+}
+
+.announcement-function-box button {
+    width: 250px;
+    height: 30px;
+    position: relative;
+    left: 25px;
+    top: 70px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rbga(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.announcement-function-box:hover {
+    box-shadow: 0px 2px 10px white;
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+}

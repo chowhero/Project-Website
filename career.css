@@ -40,7 +40,7 @@ body.no-scroll {
 }
 
 #career-cards-container {
-    display: flex;          /* 使用 Flexbox */
+  display: flex;          /* 使用 Flexbox */
   flex-direction: row;    /* 由左到右排列 (預設值) */
   flex-wrap: wrap;       /* 自動換行 */
   gap: 15px;            /* 卡片間距 */
