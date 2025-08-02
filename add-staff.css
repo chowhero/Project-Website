@@ -84,13 +84,13 @@
 
 .current-staff-function-box h2 {
     position: relative;
-    bottom: 180px;
+    bottom: 100px;
 }
 
 .current-staff {
     position: relative;
     left: 10px;
-    bottom: 150px;
+    bottom: 80px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     border: 0.5px solid var(--gray);

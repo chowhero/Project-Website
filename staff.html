@@ -78,6 +78,11 @@
 
 <script>
 
+        function isAdmin() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser && currentUser.type === 'admin';
+}
+
         // 初始化數據
         if (!localStorage.getItem('announcements')) {
             localStorage.setItem('announcements', JSON.stringify([]));
@@ -125,15 +130,30 @@
 
         // 新增職員
         function addStaff() {
-            const staff = JSON.parse(localStorage.getItem('staff'));
-            staff.push({
-                username: document.getElementById('staff-username').value,
-                password: document.getElementById('staff-password').value,
-                type: document.getElementById('staff-type').value
-            });
-            localStorage.setItem('staff', JSON.stringify(staff));
-            alert('Staff added successfully!');
-        }
+    // 雙重檢查 (前端+後端)
+    if (!isAdmin()) {
+        alert('No access, only admin can add staff!');
+        return;
+    }
+
+    const staff = JSON.parse(localStorage.getItem('staff'));
+    const newStaff = {
+        username: document.getElementById('staff-username').value,
+        password: document.getElementById('staff-password').value,
+        type: document.getElementById('staff-type').value
+    };
+
+    // 簡單驗證
+    if (!newStaff.username || !newStaff.password) {
+        alert('Please fill in the complete information!');
+        return;
+    }
+
+    staff.push(newStaff);
+    localStorage.setItem('staff', JSON.stringify(staff));
+    alert('Successfully add staff!');
+    loadStaff(); // 刷新列表
+}
     </script>
 
     <script>
@@ -256,6 +276,9 @@ function loadStaff() {
 
 // 頁面載入時自動顯示所有列表
 window.onload = function() {
+    // 隱藏添加職員界面（如果唔係管理員）
+    document.querySelector('.add-staff-function-box').style.display = isAdmin() ? 'block' : 'none';
+    
     loadAnnouncements();
     loadJobs();
     loadStaff();
