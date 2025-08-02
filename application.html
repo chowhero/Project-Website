@@ -7,55 +7,99 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="application.css"> 
     <link rel="stylesheet" href="career.css">
-
-    <title>Division Career</title>
 </head>
 <body>
+
     <header>
         <div class="title-group">
-        <h1>United States Army Roleplay</h1>
+            <h1>United States Army Roleplay</h1>
         </div>
         <nav>
-        <a href="index.html" class="home-btn">Home</a>
-        <a href="ownership.html" class="owner-btn">Ownership</a>
-        <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
-        <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
-        <a href="application.html" class="career-btn">Career</a>
-        <a href="login.html" class="login-btn">Staff</a>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+            <a href="login.html" class="login-btn">Staff</a>
+        </nav>
+    </header>
 
+    <h1 class="career-title">Division Application</h1>
 
- <h1 class="career-title">Division Application</h1>
+   <div id="career-cards-container">
+    <!-- 卡片會自動由左到右排列 -->
+    <!-- 長文字會自動換行 -->
+</div>
 
-    <div id="jobs-container"></div>
 
     <script>
-        // 從 localStorage 讀取招聘
-        const jobs = JSON.parse(localStorage.getItem('jobs') || []);
-        const container = document.getElementById('jobs-container');
-        
-        if (jobs.length === 0) {
-        container.innerHTML = '<div class="no-jobs-container"><p>No careers currently available</p></div>';
-        } else {
-            jobs.forEach(job => {
-                container.innerHTML += `
-                    <div class="job-card">
-                        <h3>${job.title}</h3>
-                        <p>${job.description}</p>
-                        <a href="${job.link}" target="_blank">👉 Apply now!</a>
-                        <small>${job.date}</small>
-                    </div>
-                `;
-            });
+        // 渲染职业卡片
+        function renderCareerCards(data) {
+            const container = document.getElementById('career-cards-container');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-jobs-container"><p>No careers currently available</p></div>';
+                return;
+            }
+            
+            container.innerHTML = data.map(job => `
+                <div class="job-card">
+                    <h3>${job.title || 'Untitled Position'}</h3>
+                    <p>${job.description || 'No description available'}</p>
+                    ${job.link ? `<a href="${job.link}" target="_blank">Apply here!</a>` : ''}
+                    ${job.date ? `<br><small>${job.date}</small></br>` : ''}
+                </div>
+            `).join('');
         }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 先尝试从 localStorage 加载
+            try {
+                const storedJobs = localStorage.getItem('jobs');
+                if (storedJobs) {
+                    const jobs = JSON.parse(storedJobs);
+                    renderCareerCards(jobs);
+                    return;
+                }
+            } catch (e) {
+                console.error('LocalStorage parse error:', e);
+            }
+            
+            // 2. 如果 localStorage 没有，尝试从 API 加载
+            fetch('/api/careers')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    // 保存到 localStorage 供下次使用
+                    localStorage.setItem('jobs', JSON.stringify(data));
+                    renderCareerCards(data);
+                })
+                .catch(error => {
+                    console.error('API request failed:', error);
+                    // 3. 如果 API 失败，使用模拟数据
+                    const mockData = [
+                        { 
+                            title: "Infantry Officer", 
+                            description: "Lead ground combat operations",
+                            link: "#",
+                            date: new Date().toLocaleDateString()
+                        },
+                        { 
+                            title: "Medical Specialist", 
+                            description: "Provide combat medical support",
+                            link: "#",
+                            date: new Date().toLocaleDateString()
+                        }
+                    ];
+                    renderCareerCards(mockData);
+                });
+        });
     </script>
-
-
-    </nav>
-    </header>
 
     <footer>
         <div class="social-links">
-            <!-- 社交媒体图标 -->
             <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
             <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
@@ -66,5 +110,4 @@
 
     <script src="/js/staff/function/staff-career.js"></script>
 </body>
-
 </html>
