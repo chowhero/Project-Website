@@ -10,14 +10,14 @@
     --black: #1b1b1b;       /* 深黑 */
     --gray: #4e4e4e;
     --highlight: #4dff4d;   /* 柔和軍事綠 */
+    --background: #111827;
+    --nav: #1f2937;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: #020024;
-    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+    background-color: var(--background);
     color: var(--white);
-    background-color: var(--dark-blue);
     margin: 0;
     padding: 0;
 }
@@ -29,13 +29,12 @@ header h1 {
 }
 
 header {
-    background: #020024;
-    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+    background-color: var(--background);
     padding: 25px;
     display: flex;           /* 启用弹性布局 */
     align-items: center;     /* 垂直居中 */
     justify-content: space-between; /* 标题左，按钮右 */
-    border-bottom: 1px solid var(--soft-blue);
+    border-bottom: 1px solid var(--nav);
 }
 
 header h1 {
@@ -46,11 +45,10 @@ header h1 {
 footer {
     font-size: 0.7rem;
     text-align: center; /* 新增呢行 */
-    background: #020024;
-    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(3, 46, 148, 1) 100%);
+    background-color: var(--background);
     color: var(--white);
     padding: 20px;
-    border-top: 0.5px solid var(--dark-blue);
+    border-top: 1px solid var(--nav);
     margin-top: 280px;
 }
 
@@ -76,17 +74,16 @@ nav a {
     color: var(--white);
     text-decoration: none;
     padding: 6px 12px;
-    border: 1px solid var(--);
     font-size: 0.9rem;
     white-space: nowrap;    /* 防止按钮文字换行 */
     transition: all 0.2s;
 }
 
 nav a:hover {
-    background-color: var(--gray);
+    background-color: var(--nav);
     color: var(--white);
     box-shadow: 0 4px 10px black;
-    border: 1px solid white;
+    border: 0.5px solid white;
 }
 
 .container {
@@ -143,7 +140,7 @@ nav a:hover {
     align-items: center;
     font-size: 1rem;
     background-color: transparent;
-    background-color: var(--navy-blue);
+    background-color: var(--background);
     transition: transform 0.3s;
 }
 

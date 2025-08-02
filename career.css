@@ -12,21 +12,89 @@ body.no-scroll {
     --black: #1b1b1b;       /* 深黑 */
     --gray: #4e4e4e;
     --highlight: #4dff4d;   /* 柔和軍事綠 */
+    --background: #111827;
+    --nav: #1f2937;
 }
 
 .career-title {
+    font-size: 20px;
     height: 25px;
     text-align: center;
     position: relative;
-    right: 620px;
-    top: 100px;
+    left: 20px;
+    bottom: 400px;
 }
 
-.no-jobs-container{
+.no-jobs-container p {
     width: 240px;
     text-align: center;
     position: relative;
-    right: 820px;
-    top: 250px;
+    left: 435px;
+    bottom: 220px;
     white-space: nowrap;
+}
+
+.career-cards-container {
+  display: block !important; /* 覆盖可能的隐藏样式 */
+  overflow: visible !important;
+}
+
+#career-cards-container {
+    display: flex;          /* 使用 Flexbox */
+  flex-direction: row;    /* 由左到右排列 (預設值) */
+  flex-wrap: wrap;       /* 自動換行 */
+  gap: 15px;            /* 卡片間距 */
+  justify-content: flex-start; /* 從左邊開始 (預設值) */
+}
+
+.job-card {
+    background-color: var(--dark-blue);
+    border: 0.5px solid var(--white);
+    position: relative;
+    left: 40px;
+    bottom: 400px;
+    min-height: 210px;
+    height: auto;
+    width: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    word-break: break-word;  /* 強制所有文字換行 */
+    overflow-wrap: anywhere;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-card:hover {
+    box-shadow: 0 4px 10px white;
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+}
+
+.job-card h3 {
+    position: relative;
+    left: 10px;
+    bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.job-card p {
+    position: relative;
+    left: 10px;
+    bottom: 10px;
+    flex-grow: 1; 
+    margin-bottom: 15px; 
+}
+
+.job-card a {
+    position: relative;
+    left: 10px;
+    top: 25px;
+    color: white;
+    text-decoration: none;
+}
+
+.job-card small {
+    position: relative;
+    left: 10px;
+    top: 35px;
 }

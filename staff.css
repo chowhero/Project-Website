@@ -6,14 +6,17 @@
     --navy-blue: #1a1a40;  /* 啞光海軍藍 */
     --soft-blue: #2d2d5a;   /* 按鈕用藍 */
     --white: #e6e6e6;       /* 柔白 */
+    --black: #1b1b1b;       /* 深黑 */
     --gray: #4e4e4e;
     --highlight: #4dff4d;   /* 柔和軍事綠 */
+    --background: #111827;
+    --nav: #1f2937;
 }
 
 /* 頂部標題欄 - 左上對齊 */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     color: var(--white);
     margin: 0;
     padding: 0;
@@ -22,11 +25,11 @@ body {
 footer {
     font-size: 0.7rem;
     text-align: center; /* 新增呢行 */
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     color: var(--white);
     padding: 20px;
     margin-top: 40px;
-    border-top: 0.5px solid var(--soft-blue);
+    border-top: 0.5px solid var(--nav);
 }
 
 footer p {
@@ -58,7 +61,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: var(--gray);
+    background-color: var(--nav);
     color: var(--white);
 }
 
@@ -109,7 +112,7 @@ nav a:hover {
     align-items: center;
     font-size: 1rem;
     background-color: transparent;
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     transition: transform 0.3s;
 }
 
@@ -263,7 +266,7 @@ nav a:hover {
 /* 頂部標題欄 - 左上對齊 */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     color: var(--white);
     margin: 0;
     padding: 0;
@@ -277,12 +280,12 @@ header h1 {
 }
 
 header {
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     padding: 25px;
     display: flex;           /* 启用弹性布局 */
     align-items: center;     /* 垂直居中 */
     justify-content: space-between; /* 标题左，按钮右 */
-    border-bottom: 1px solid var(--soft-blue);
+    border-bottom: 1px solid var(--nav);
 }
 
 header h1 {
@@ -293,11 +296,11 @@ header h1 {
 footer {
     font-size: 0.7rem;
     text-align: center; /* 新增呢行 */
-    background-color: var(--dark-blue);
+    background-color: var(--background);
     color: var(--white);
     padding: 20px;
     margin-top: 40px;
-    border-top: 0.5px solid var(--soft-blue);
+    border-top: 1px solid var(--nav);
 }
 
 footer p {
@@ -344,7 +347,7 @@ nav a:hover {
   align-items: center;
   width: 50px;  /* 固定容器大小 */
   height: 50px;
-  background: var(--navy-blue);
+  background: var(--background);
   border-radius: 50%;
 }
 
