@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+    --dark-blue: #0f2442;  /* 深暗藍（接近黑）*/
+    --navy-blue: #1a1a40;  /* 啞光海軍藍 */
+    --soft-blue: #2d2d5a;   /* 按鈕用藍 */
+    --white: #e6e6e6;       /* 柔白 */
+    --black: #1b1b1b;       /* 深黑 */
+    --gray: #4e4e4e;
+    --highlight: #4dff4d;   /* 柔和軍事綠 */
+    --background: #111827;
+    --nav: #1f2937;
+}
+
+.add-staff-function-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid var(--gray);
+    width: 300px;
+    height: 240px;
+    position: relative;
+    left: 780px;
+    bottom: 452px;
+    border-radius: 10px;
+}
+
+.add-staff-function-box h2{
+    font-size: 15px;
+    position: relative;
+    left: 110px;
+}
+
+.add-staff-function-box button {
+    width: 250px;
+    height: 30px;
+    position: relative;
+    left: 25px;
+    top: 30px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rbga(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.add-staff-function-box input {
+    position: relative;
+    top: 0px;
+    left: 45px;
+    height: 20px;
+    width: 200px;
+    border-radius: 100px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 0.5px solid var(--gray);
+}
+
+
+.add-staff-function-box input::placeholder {
+    color: #fff;
+}
+
+.add-staff-function-box select {
+    width: 70px;
+    height: 20px;
+    position: relative;
+    left: 100px;
+    top: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    border: 0.5px solid var(--gray);
+    color: #fff;
+}
+
+.add-staff-function-box:hover {
+    box-shadow: 0px 2px 10px white;
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+}
+
+.current-staff-function-box h2 {
+    position: relative;
+    bottom: 180px;
+}
+
+.current-staff {
+    position: relative;
+    left: 10px;
+    bottom: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 0.5px solid var(--gray);
+}
