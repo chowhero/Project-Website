@@ -59,21 +59,21 @@
     </div>
 
     <!-- 新增公告列表 -->
-    <div class="function-box">
-        <h2>Current Announcements</h2>
-        <div id="announcement-list"></div>
+    <div class="current-announcement-function-box">
+        <h2>Current Announcements:</h2>
+        <div id="announcement-list" class="announcement-current"></div>
     </div>
 
     <!-- 新增招聘列表 -->
-    <div class="function-box">
-        <h2>Current Careers</h2>
-        <div id="job-list"></div>
+    <div class="current-career-function-box">
+        <h2>Current Careers:</h2>
+        <div id="job-list" class="current-career"></div>
     </div>
 
     <!-- 新增職員列表 -->
-    <div class="function-box">
-        <h2>Staff Members</h2>
-        <div id="staff-list"></div>
+    <div class="current-staff-function-box">
+        <h2>Staff Members:</h2>
+        <div id="staff-list" class="current-staff"></div>
     </div>
 
 <script>
@@ -107,7 +107,7 @@
                 date: new Date().toLocaleString()
             });
             localStorage.setItem('announcements', JSON.stringify(announcements));
-            alert('✅ | Announcement posted successfully!');
+            alert('Announcement posted successfully!');
         }
 
         // 發布招聘
@@ -120,7 +120,7 @@
                 date: new Date().toLocaleString()
             });
             localStorage.setItem('jobs', JSON.stringify(jobs));
-            alert('✅ | Career posted successfully!');
+            alert('Career posted successfully!');
         }
 
         // 新增職員
@@ -132,7 +132,7 @@
                 type: document.getElementById('staff-type').value
             });
             localStorage.setItem('staff', JSON.stringify(staff));
-            alert('✅ | Staff added successfully!');
+            alert('Staff added successfully!');
         }
     </script>
 

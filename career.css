@@ -48,8 +48,8 @@ body.no-scroll {
 }
 
 .job-card {
-    background-color: var(--dark-blue);
-    border: 0.5px solid var(--white);
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid var(--gray);
     position: relative;
     left: 40px;
     bottom: 400px;
@@ -65,7 +65,7 @@ body.no-scroll {
 }
 
 .job-card:hover {
-    box-shadow: 0 4px 10px white;
+    box-shadow: 0 2px 10px white;
     transition: transform 0.3s ease;
     transform: translateY(-5px);
 }
@@ -95,6 +95,110 @@ body.no-scroll {
 
 .job-card small {
     position: relative;
+    left: 0px;
+    top: 30px;
+}
+
+.career-function-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid var(--gray);
+    width: 300px;
+    height: 240px;
+    position: relative;
+    left: 400px;
+    bottom: 210px;
+    border-radius: 10px;
+}
+
+.career-function-box h2{
+    font-size: 15px;
+    position: relative;
+    left: 100px;
+}
+
+.career-function-box button {
+    width: 250px;
+    height: 30px;
+    position: relative;
+    left: 25px;
+    top: 20px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rbga(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.career-function-box input {
+    position: relative;
+    top: 10px;
+    left: 45px;
+    height: 20px;
+    width: 200px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 0.5px solid var(--gray);
+}
+
+
+.career-function-box input::placeholder {
+    color: #fff;
+}
+
+.career-function-box:hover {
+    box-shadow: 0px 2px 10px white;
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+}
+
+.career-function-box textarea {
+    position: relative;
+    top: 12px;
+    left: 45px;
+    height: 20px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    border: 0.5px solid var(--gray);
+    color: #fff;
+}
+
+.career-function-box textarea::placeholder {
+    color: #fff;
+}
+
+.career-function-box input {
+    position: relative;
+    top: 0px;
+    right: 45px;
+    margin-top: 20px;
+    height: 20px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    border: 0.5px solid var(--gray);
+    color: #fff;
+}
+
+.job-link::placeholder {
+    color: #fff;
+}
+
+.current-career-function-box h2 {
+    position: relative;
+    bottom: 250px;
+}
+
+.current-career {
+    position: relative;
     left: 10px;
-    top: 35px;
+    bottom: 220px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 0.5px solid var(--gray)
 }
