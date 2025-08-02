@@ -191,13 +191,13 @@ body.no-scroll {
 
 .current-career-function-box h2 {
     position: relative;
-    bottom: 250px;
+    bottom: 180px;
 }
 
 .current-career {
     position: relative;
     left: 10px;
-    bottom: 220px;
+    bottom: 140px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     border: 0.5px solid var(--gray)

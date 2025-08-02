@@ -156,14 +156,14 @@ body.no-scroll {
 
 .current-announcement-function-box h2 {
     position: relative;
-    bottom: 300px;
+    bottom: 200px;
     font-size: 20px;
 }
 
 .announcement-current {
     position: relative;
     left: 10px;
-    bottom: 280px;
+    bottom: 180px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     border: 0.5px solid var(--gray);
