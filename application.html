@@ -77,25 +77,6 @@
                     localStorage.setItem('jobs', JSON.stringify(data));
                     renderCareerCards(data);
                 })
-                .catch(error => {
-                    console.error('API request failed:', error);
-                    // 3. 如果 API 失败，使用模拟数据
-                    const mockData = [
-                        { 
-                            title: "Infantry Officer", 
-                            description: "Lead ground combat operations",
-                            link: "#",
-                            date: new Date().toLocaleDateString()
-                        },
-                        { 
-                            title: "Medical Specialist", 
-                            description: "Provide combat medical support",
-                            link: "#",
-                            date: new Date().toLocaleDateString()
-                        }
-                    ];
-                    renderCareerCards(mockData);
-                });
         });
     </script>
 
