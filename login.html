@@ -3,9 +3,37 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="loading.css">
     <title>Staff Login</title>
 </head>
 <body>
+
+    <div id="loading-screen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 36, 66, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+">
+    <!-- 你提供的字母加載動畫 -->
+    <div class="loader-wrapper">
+        <span class="loader-letter">L</span>
+        <span class="loader-letter">o</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">d</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <div class="loader"></div>
+    </div>
+</div>
+
     <div class="wrapper">
     <form id="loginForm" onsubmit="return login()">
     <h1>Staff Login</h1>
@@ -52,5 +80,7 @@
             return false;
         }
     </script>
+
+    <script src="load.js"></script>
 </body>
 </html>
