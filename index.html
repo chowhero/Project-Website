@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta name="google-site-verification" content="0GgS57eBH1gpAmu30GvS8OpYcZo4Pqr7H7XTW_08xGQ" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>United States Army Roleplay Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="announcement.css">
+    <link rel="stylesheet" href="loading.css">
+     <title>Announcement</title>
+</head>
+
+<body>
+    
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/689cc401a7ee3319309be2c6/1j2i5r9o8';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+    <div id="loading-screen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 36, 66, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+">
+    <!-- 你提供的字母加載動畫 -->
+    <div class="loader-wrapper">
+        <span class="loader-letter">L</span>
+        <span class="loader-letter">o</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">d</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <div class="loader"></div>
+    </div>
+</div>
+
+    <header>
+        <div class="title-group">
+            <h1>United States Army Roleplay</h1>
+        </div>
+
+        <nav>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="division.html" class="division-btn">Divisions</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+            <a href="login.html" class="login-btn">Staff</a>
+        </nav>
+    </header>
+
+
+    <div id="countdown">
+                <h3>Game Release Countdown</h3>
+                <div id="timer">
+                    <span id="years">0</span>Y <span id="months">0</span>M 
+                    <span id="days">0</span>D <span id="hours">0</span>H
+                    <span id="minutes">0</span>Min <span id="seconds">0</span>Sec
+                </div>
+                <div class="countdown-subtext">T-MINUS TO LAUNCH</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="announcements-section">
+    <h1>📢 Announcement</h1>
+    <div id="announcements-container" class="announcements-list">
+        <!-- 公告将通过JavaScript动态插入 -->
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('announcements-container');
+    if (!container) return;
+    
+    // 从localStorage加载公告
+    let announcements = [];
+    try {
+        announcements = JSON.parse(localStorage.getItem('announcements') || "[]");
+    } catch (e) {
+        console.error('解析公告数据出错:', e);
+    }
+    
+    // 如果没有数据，尝试从API获取
+    if (announcements.length === 0) {
+        fetch('/api/announcements')
+            .then(res => res.ok ? res.json() : [])
+            .then(apiAnnouncements => {
+                if (apiAnnouncements.length > 0) {
+                    localStorage.setItem('announcements', JSON.stringify(apiAnnouncements));
+                }
+                renderAnnouncements(apiAnnouncements);
+            })
+            .catch(console.error);
+    } else {
+        renderAnnouncements(announcements);
+    }
+    
+    function renderAnnouncements(announcements) {
+        container.innerHTML = announcements.length ? 
+            announcements.map(ann => `
+                <div class="announcement-card ${ann.priority === 'high' ? 'high-priority' : ''}">
+                    <h3>${ann.title || 'New Announcement'}</h3>
+                    <p>${ann.content || 'No description announcement'}</p>
+                    <div class="announcement-date">
+                        ${ann.date || ann.created_at || new Date().toLocaleString()}
+                    </div>
+                </div>
+            `).join('') : `
+                <div class="announcement-card no-announcements">
+                    <p>No announcement currently.</p>
+                </div>
+            `;
+    }
+});
+</script>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
+        </div>
+        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+        <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
+    </footer>
+
+        <div class="text-link">
+            <a href="https://discord.com/channels/1339167213680070680/1339890301111898133">Open a ticket</a>
+            <a href="https://mail.google.com/mail/u/0/#inbox?compose=FNSXwzPbwTTJgMSvvLsvvRQwTXwjrGgNPVPSJnDrSfSKTlsRmdWFxVDFxGwFHdWFjCMLKKtkfnXJwfMJNQttQBTThQZVlHxPCfTptgMzFLQHKJPglKqBDGQwwRwWZjgDsZkvvtMzrMMzRPJMQjdBxNcgHNVV">Gmail Us</a>
+            <a href="https://groups.google.com/forum/#!forum/usarmyrbxpromote/join">Subscribe</a>
+            <p>Support</p>
+        </div>
+
+    <!-- 脚本加载 -->
+    <script src="js/staff/staff-auth.js"></script>
+    <script src="js/staff/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
+    <script src="/js/staff/function/staff-announcements.js"></script>
+     <script src="load.js"></script>
+</body>
+</html>
+                                             

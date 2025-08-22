@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Career - United States Army Roleplay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="application.css"> 
+    <link rel="stylesheet" href="career.css">
+    <link rel="stylesheet" href="loading.css">
+</head>
+<body>
+
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/689cc401a7ee3319309be2c6/1j2i5r9o8';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+    <div id="loading-screen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 36, 66, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+">
+    <!-- 你提供的字母加載動畫 -->
+    <div class="loader-wrapper">
+        <span class="loader-letter">L</span>
+        <span class="loader-letter">o</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">d</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <div class="loader"></div>
+    </div>
+</div>
+
+    <header>
+        <div class="title-group">
+            <h1>United States Army Roleplay</h1>
+        </div>
+        <nav>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="division.html" class="division-btn">Divisions</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+            <a href="login.html" class="login-btn">Staff</a>
+        </nav>
+
+    </header>
+
+    <h1 class="career-title">Division Application</h1>
+
+   <div id="career-cards-container">
+    <!-- 卡片會自動由左到右排列 -->
+    <!-- 長文字會自動換行 -->
+</div>
+
+
+    <script>
+        // 渲染职业卡片
+        function renderCareerCards(data) {
+            const container = document.getElementById('career-cards-container');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-jobs-container"><p>No careers currently available</p></div>';
+                return;
+            }
+            
+            container.innerHTML = data.map(job => `
+                <div class="job-card">
+                    <h3>${job.title || 'Untitled Position'}</h3>
+                    <p>${job.description || 'No description available'}</p>
+                    ${job.link ? `<a href="${job.link}" target="_blank">Apply here!</a>` : ''}
+                    ${job.date ? `<br><small>${job.date}</small></br>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 先尝试从 localStorage 加载
+            try {
+                const storedJobs = localStorage.getItem('jobs');
+                if (storedJobs) {
+                    const jobs = JSON.parse(storedJobs);
+                    renderCareerCards(jobs);
+                    return;
+                }
+            } catch (e) {
+                console.error('LocalStorage parse error:', e);
+            }
+            
+            // 2. 如果 localStorage 没有，尝试从 API 加载
+            fetch('/api/careers')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    // 保存到 localStorage 供下次使用
+                    localStorage.setItem('jobs', JSON.stringify(data));
+                    renderCareerCards(data);
+                })
+        });
+    </script>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
+        </div>
+        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+        <p><small>This is a fan-made game, not affiliated with the actual US military</small></p>
+    </footer>
+
+    <script src="/js/staff/function/staff-career.js"></script>
+    <script src="load.js"></script>
+</body>
+</html>

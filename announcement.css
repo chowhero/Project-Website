@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body.no-scroll {
+    overflow: hidden; /* 禁止所有滾動 */
+}
+
+:root {
+    --dark-blue: #0f2442;  /* 深暗藍（接近黑）*/
+    --navy-blue: #1a1a40;  /* 啞光海軍藍 */
+    --soft-blue: #2d2d5a;   /* 按鈕用藍 */
+    --white: #e6e6e6;       /* 柔白 */
+    --black: #1b1b1b;       /* 深黑 */
+    --gray: #4e4e4e;
+    --highlight: #4dff4d;   /* 柔和軍事綠 */
+}
+
+.announcements-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 18px;
+    height: 230px;
+    position: relative;
+    right: 120px;
+    top: 100px;
+    flex: 1; /* 自动填充可用空间 */
+    min-height: 0; /* 允许内容区域收缩 */
+    overflow-y: auto; /* 内容过多时显示滚动条 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;  /* 最低高度 */
+    height: auto;       /* 自動根據內容擴展 */
+    overflow: hidden;   /* 防止內容爆出 */
+}
+
+/* 公告列表容器 */
+.announcements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 單個公告卡片 */
+.announcement-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--gray);
+    border-radius: 8px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
+
+.announcement-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px black;
+}
+
+.announcement-card h3 {
+    color: var(--white);
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.announcement-card p {
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.announcement-card .announcement-date {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.announcement-card .announcement-date::before {
+    content: "🕒";
+    margin-right: 5px;
+}
+
+.announcement-function-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid var(--gray);
+    width: 300px;
+    height: 240px;
+    position: relative;
+    left: 30px;
+    top: 30px;
+    border-radius: 10px;
+}
+
+.announcement-function-box h2{
+    font-size: 15px;
+    position: relative;
+    left: 65px;
+}
+
+.announcement-function-box button {
+    width: 250px;
+    height: 30px;
+    position: relative;
+    left: 25px;
+    top: 90px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rbga(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.announcement-function-box input {
+    position: relative;
+    top: 20px;
+    left: 45px;
+    height: 20px;
+    width: 200px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 0.5px solid var(--gray);
+}
+
+
+.announcement-function-box input::placeholder {
+    color: #fff;
+}
+
+.announcement-function-box:hover {
+    box-shadow: 0px 2px 10px white;
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+}
+
+.announcement-function-box textarea {
+    position: relative;
+    top: 40px;
+    left: 45px;
+    height: 20px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    border: 0.5px solid var(--gray);
+    color: #fff;
+}
+
+.announcement-function-box textarea::placeholder {
+    color: #fff;
+}
+
+.current-announcement-function-box h2 {
+    position: relative;
+    bottom: 200px;
+    font-size: 20px;
+}
+
+.announcement-current {
+    position: relative;
+    left: 10px;
+    bottom: 180px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 0.5px solid var(--gray);
+}

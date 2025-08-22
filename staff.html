@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="staff.css">
+    <link rel="stylesheet" href="announcement.css">
+    <link rel="stylesheet" href="career.css">
+    <link rel="stylesheet" href="add-staff.css">
+    <link rel="stylesheet" href="loading.css">
+</head>
+<body>
+
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/689cc401a7ee3319309be2c6/1j2i5r9o8';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+    <div id="loading-screen" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 36, 66, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+">
+    <!-- 你提供的字母加載動畫 -->
+    <div class="loader-wrapper">
+        <span class="loader-letter">L</span>
+        <span class="loader-letter">o</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">d</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <div class="loader"></div>
+    </div>
+</div>
+
+    <header>
+      <h1>United States Army Roleplay</h1>
+        <nav>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="ownership.html" class="owner-btn">Ownership</a>
+            <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
+            <a href="division.html" class="division-btn">Divisions</a>
+            <a href="gamepasses.html" class="gamepasses-btn">Game-Passes</a>
+            <a href="application.html" class="career-btn">Career</a>
+        </nav>
+
+    </header>
+
+    <main>
+        <div id="staffDashboard">
+            <!-- 内容由dashboard.js动态生成 -->
+        </div>
+
+        <!-- 公告發布區域 -->
+<div class="announcement-function-box">
+        <h2>Post Announcement</h2>
+        <input type="text" id="announce-title" placeholder="Title"><br>
+        <textarea id="announce-content" placeholder="Description"></textarea><br>
+        <button onclick="postAnnouncement()">Post</button>
+    </div>
+    
+    <!-- 招聘發布 -->
+    <div class="career-function-box">
+        <h2>Post Career</h2>
+        <input type="text" id="job-title" placeholder="Division Name"><br>
+        <textarea id="job-desc" placeholder="Division Description"></textarea><br>
+        <input type="text" id="job-link" placeholder="Apply Link"><br>
+        <button onclick="postJob()">Post</button>
+    </div>
+    
+    <!-- 職員管理 -->
+    <div class="add-staff-function-box">
+        <h2>Add Staff</h2>
+        <input type="text" id="staff-username" placeholder="Staff ID"><br>
+        <input type="password" id="staff-password" placeholder="Password"><br>
+        <select id="staff-type">
+            <option value="hr">Staff</option>
+            <option value="admin">Admin</option>
+        </select><br>
+        <button onclick="addStaff()">Add</button>
+    </div>
+
+    <!-- 新增公告列表 -->
+    <div class="current-announcement-function-box">
+        <h2>Current Announcements:</h2>
+        <div id="announcement-list" class="announcement-current"></div>
+    </div>
+
+    <!-- 新增招聘列表 -->
+    <div class="current-career-function-box">
+        <h2>Current Careers:</h2>
+        <div id="job-list" class="current-career"></div>
+    </div>
+
+    <!-- 新增職員列表 -->
+    <div class="current-staff-function-box">
+        <h2>Staff Members:</h2>
+        <div id="staff-list" class="current-staff"></div>
+    </div>
+
+<script>
+
+        function isAdmin() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser && currentUser.type === 'admin';
+}
+
+        // 初始化數據
+        if (!localStorage.getItem('announcements')) {
+            localStorage.setItem('announcements', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('jobs')) {
+            localStorage.setItem('jobs', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('staff')) {
+            localStorage.setItem('staff', JSON.stringify([
+                { username: 'admin', password: 'admin123', type: 'admin' }
+            ]));
+        }
+
+        // 檢查登入狀態
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('Please login first!');
+            window.location.href = 'login.html';
+        }
+
+        // 發布公告
+        function postAnnouncement() {
+            const announcements = JSON.parse(localStorage.getItem('announcements'));
+            announcements.unshift({  // 加到最前面
+                title: document.getElementById('announce-title').value,
+                content: document.getElementById('announce-content').value,
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('announcements', JSON.stringify(announcements));
+            alert('Announcement posted successfully!');
+        }
+
+        // 發布招聘
+        function postJob() {
+            const jobs = JSON.parse(localStorage.getItem('jobs'));
+            jobs.unshift({
+                title: document.getElementById('job-title').value,
+                description: document.getElementById('job-desc').value,
+                link: document.getElementById('job-link').value,
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('jobs', JSON.stringify(jobs));
+            alert('Career posted successfully!');
+        }
+
+        // 新增職員
+        function addStaff() {
+    // 雙重檢查 (前端+後端)
+    if (!isAdmin()) {
+        alert('No access, only admin can add staff!');
+        return;
+    }
+
+    const staff = JSON.parse(localStorage.getItem('staff'));
+    const newStaff = {
+        username: document.getElementById('staff-username').value,
+        password: document.getElementById('staff-password').value,
+        type: document.getElementById('staff-type').value
+    };
+
+    // 簡單驗證
+    if (!newStaff.username || !newStaff.password) {
+        alert('Please fill in the complete information!');
+        return;
+    }
+
+    staff.push(newStaff);
+    localStorage.setItem('staff', JSON.stringify(staff));
+    alert('Successfully add staff!');
+    loadStaff(); // 刷新列表
+}
+    </script>
+
+    <script>
+// 檢查當前用戶是否為職員
+function isStaff() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser && (currentUser.type === 'hr' || currentUser.type === 'admin');
+}
+
+// 刪除公告 (只有職員可用)
+function deleteAnnouncement(index) {
+    if (!isStaff()) {
+        alert('Only staff can delete announcements!');
+        return;
+    }
+    
+    if (confirm('Confirm you want to delete this announcement?')) {
+        const announcements = JSON.parse(localStorage.getItem('announcements'));
+        announcements.splice(index, 1);
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        loadAnnouncements();
+    }
+}
+
+// 刪除招聘 (只有職員可用)
+function deleteJob(index) {
+    if (!isStaff()) {
+        alert('Only staff can delete career postings!');
+        return;
+    }
+    
+    if (confirm('Confirm you want to delete this career post?')) {
+        const jobs = JSON.parse(localStorage.getItem('jobs'));
+        jobs.splice(index, 1);
+        localStorage.setItem('jobs', JSON.stringify(jobs));
+        loadJobs();
+    }
+}
+
+// 刪除職員 (只有管理員可用)
+function deleteStaff(index) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (currentUser.type !== 'admin') {
+        alert('Only admins can delete staff members!');
+        return;
+    }
+    
+    const staff = JSON.parse(localStorage.getItem('staff'));
+    const userToDelete = staff[index];
+    
+    if (currentUser.username === userToDelete.username) {
+        alert('You cannot delete yourself!');
+        return;
+    }
+    
+    if (confirm(`Confirm you want to delete staff ${userToDelete.username}？`)) {
+        staff.splice(index, 1);
+        localStorage.setItem('staff', JSON.stringify(staff));
+        loadStaff();
+    }
+}
+
+function loadAnnouncements() {
+    const announcements = JSON.parse(localStorage.getItem('announcements') || []);
+    const list = document.getElementById('announcement-list');
+    list.innerHTML = '';
+    
+    announcements.forEach((ann, index) => {
+        list.innerHTML += `
+            <div class="item">
+                <h3>${ann.title}</h3>
+                <p>${ann.content}</p>
+                <small>${ann.date}</small>
+                ${isStaff() ? `<button onclick="deleteAnnouncement(${index})" class="delete-btn">Delete</button>` : ''}
+            </div>
+        `;
+    });
+}
+
+// 顯示招聘列表
+function loadJobs() {
+    const jobs = JSON.parse(localStorage.getItem('jobs') || []);
+    const list = document.getElementById('job-list');
+    list.innerHTML = '';
+    
+    jobs.forEach((job, index) => {
+        list.innerHTML += `
+            <div class="item">
+                <h3>${job.title}</h3>
+                <p>${job.description}</p>
+                <a href="${job.link}" target="_blank">Apply Link</a>
+                <small>${job.date}</small>
+                ${isStaff() ? `<button onclick="deleteJob(${index})" class="delete-btn">Delete</button>` : ''}
+            </div>
+        `;
+    });
+}
+
+// 顯示職員列表
+function loadStaff() {
+    const staff = JSON.parse(localStorage.getItem('staff') || []);
+    const list = document.getElementById('staff-list');
+    list.innerHTML = '';
+    
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    staff.forEach((user, index) => {
+        const canDelete = currentUser.type === 'admin' && 
+                         currentUser.username !== user.username;
+        
+        list.innerHTML += `
+            <div class="item">
+                <strong>${user.username}</strong> (${user.type})
+                ${canDelete ? `<button onclick="deleteStaff(${index})" class="delete-btn">Delete</button>` : ''}
+            </div>
+        `;
+    });
+}
+
+// 頁面載入時自動顯示所有列表
+window.onload = function() {
+    // 隱藏添加職員界面（如果唔係管理員）
+    document.querySelector('.add-staff-function-box').style.display = isAdmin() ? 'block' : 'none';
+    
+    loadAnnouncements();
+    loadJobs();
+    loadStaff();
+};
+</script>
+
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/955rtqFWBw" class="social-icon discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://youtube.com/@robloxusarmyofficial?si=mxcgPo4eox4a0N4h" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.roblox.com/share/g/32798597" class="social-icon twitter"><i class="fa-solid fa-gamepad"></i></a>
+        </div>
+        <p>&copy; 2025 United States Army Roleplay | Roblox. All rights reserved.</p>
+    </footer>
+
+    <!-- 脚本加载 -->
+    <script src="js/staff/utils.js"></script>
+    <script src="js/staff/ui.js"></script>
+    <script src="load.js"></script>
+</body>
+</html>
