@@ -1,9 +1,7 @@
-import { MetadataRoute } from 'next'
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap() {
   return [
     {
-      url: 'https://usarmyrbx.pages.dev/', // 請改為您嘅 Cloudflare 域名
+      url: 'https://usarmyrbx.pages.dev/', // 改為您嘅 Cloudflare 域名
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1.00,
