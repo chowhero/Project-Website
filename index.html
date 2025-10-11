@@ -76,7 +76,7 @@
             <h1>United States Army Roleplay</h1>
         </div>
 
-        <nav>
+        <nav id="main-nav">
             <a href="index.html" class="home-btn">Home</a>
             <a href="ownership.html" class="owner-btn">Ownership</a>
             <a href="specialthanks.html" class="special-btn">Special-Thanks</a>
@@ -85,8 +85,36 @@
             <a href="application.html" class="career-btn">Career</a>
             <a href="login.html" class="login-btn">Staff</a>
         </nav>
-    </header>
 
+        <div class="hamburger" id="hamburger-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+        </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.getElementById('main-nav');
+    
+    hamburgerBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        hamburgerBtn.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function() {
+        mainNav.classList.remove('active');
+        hamburgerBtn.classList.remove('active');
+    });
+
+    mainNav.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+});
+</script>
+
+    </header>
 
     <div id="countdown">
                 <h3>Game Release Countdown</h3>
